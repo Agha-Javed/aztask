@@ -1,10 +1,7 @@
 package com.aztask.controllers;
 
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-
 import com.aztask.actors.TaskSupervisor;
 import com.aztask.vo.TaskVO;
-
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.PoisonPill;
@@ -14,7 +11,6 @@ import play.libs.Akka;
 import play.mvc.*;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 public class Application extends Controller {
 
