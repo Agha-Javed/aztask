@@ -9,6 +9,7 @@ import play.mvc.Result;
 
 import com.aztask.business.Task;
 import com.aztask.business.User;
+import com.aztask.service.TaskService;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,13 +28,12 @@ public class LoggedInUserTasks extends Controller {
 		JsonNode taskNode = request().body().asJson();
 
 		if (taskNode.size() > 0) {
-
+			TaskService taskService=TaskService.getInstance();
 			ObjectMapper mapper = new ObjectMapper();
 			TaskVO task = mapper.treeToValue(taskNode, TaskVO.class);
 			task.setUser_id(userId);
 			log.info("Saving Task Object." + task);
-			return ok(Json.toJson(new Task().createTask(task)));
-
+			return ok(Json.toJson(taskService.createTask(task)));
 		}
 
 		return ok(Json.toJson(new Reply("400", "Invalid Request")));

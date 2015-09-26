@@ -4,7 +4,6 @@ import com.aztask.actors.TaskSupervisor;
 import com.aztask.vo.TaskVO;
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
-import akka.actor.PoisonPill;
 import akka.actor.Props;
 import play.Logger.ALogger;
 import play.libs.Akka;
@@ -31,9 +30,10 @@ public class Application extends Controller {
 		log.info("Starting to call actor.");
 		//Akka.system().actorOf(arg0, arg1)
     	ActorSelection actorSelection = Akka.system().actorSelection("/user/ParentActor");
+    	System.out.println("Actor Selection:"+actorSelection.anchor());
 		log.info("Found actor."+actorSelection.anchor());
     	actorSelection.tell(new TaskVO("new task","general",4), null);
-    	actorSelection.tell(PoisonPill.getInstance(),null);
+    	//actorSelection.tell(PoisonPill.getInstance(),null);
 		return ok("Task has been forwarded.");
 
 //		return Promise.wrap(ask(myActor, "hello", 1000)).map(response -> ok(response.toString()));
@@ -43,7 +43,6 @@ public class Application extends Controller {
 		log.info("connecting to redis server.");
 		//JedisPool pool = new JedisPool(new JedisPoolConfig(), "127.0.0.1",);
 		JedisPool pool = new JedisPool("192.168.56.101",6379);
-		
 		log.info("trying to connect with.");
 		Jedis jedis = pool.getResource();
 		String value=jedis.get("foo");

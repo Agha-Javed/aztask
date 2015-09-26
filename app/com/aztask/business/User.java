@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.aztask.data.UserDao;
+import com.aztask.vo.NearbyUser;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
@@ -29,5 +30,9 @@ public class User {
 	
 	public List<TaskVO> tasksByUserId(int userId){
 		return new UserDao().tasksByUserId(userId);
+	}
+	
+	public List<NearbyUser> getNearbyUsers(TaskVO task){
+		return new UserDao().getNearbyUsers(task);
 	}
 }
