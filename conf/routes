@@ -5,7 +5,7 @@
 # Home page
 GET     /                           	 com.aztask.controllers.Application.index()
 GET     /task                            com.aztask.controllers.Application.task()
-GET     /redis                            com.aztask.controllers.Application.redis()
+GET     /redis                           com.aztask.controllers.Application.redis()
 
 
 GET     /tasks/list/new                  com.aztask.controllers.UserTasks.newTasks()
@@ -13,7 +13,7 @@ GET     /tasks/list/featured             com.aztask.controllers.UserTasks.featur
 GET     /tasks/list/nearby               com.aztask.controllers.UserTasks.nearbyTasks()
 
 POST	/user/register					 com.aztask.controllers.UserRegisteration.registerUser()
-POST	/user/:id/is_registered				 com.aztask.controllers.UserRegisteration.isUserRegistered(id: Int)
+POST	/user/:id/is_registered			 com.aztask.controllers.UserRegisteration.isUserRegistered(id: Int)
 POST	/user/:id/createTask			 com.aztask.controllers.LoggedInUserTasks.createTask(id: Int)
 POST	/user/deleteTask				 com.aztask.controllers.LoggedInUserTasks.deleteTask()
 POST	/user/updateTask				 com.aztask.controllers.LoggedInUserTasks.updateTask()
