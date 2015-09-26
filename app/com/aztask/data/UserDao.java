@@ -1,11 +1,16 @@
 package com.aztask.data;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import play.Logger.ALogger;
 import play.db.jpa.JPA;
+
+import com.aztask.vo.NearbyUser;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
 
@@ -40,6 +45,44 @@ public class UserDao {
 	public List<TaskVO> tasksByUserId(int userId){
 		Query query=JPA.em().createQuery("SELECT t FROM TaskVO t where t.user_id=:user_id");
 		return query.setParameter("user_id", userId).getResultList();
+	}
+	
+	/**
+	 * @param task , this task is newly added by users, so we need to find all users nearby on the basis of coordinates.
+	 * @return
+	 */
+	public List<NearbyUser> getNearbyUsers(TaskVO task) {
+
+		String query="SELECT device_id, (6371 * acos (cos ( radians(37.386339) ) * cos( radians(tul.latitude ) ) * cos( radians(tul.longitude ) - radians(-122.085823) )+sin ( radians(37.386339) )* sin( radians(tul.latitude) ))) AS distance" + 
+				" FROM t_user_loc tul having distance < 1 ORDER BY distance";
+
+//		String query="SELECT device_id, (6371 * acos (cos ( radians(:latitude) ) * cos( radians(tul.latitude ) ) * cos( radians(tul.longitude ) - radians(:longitude) )+sin ( radians(:longitude) )* sin( radians(tul.latitude) ))) AS distance"+
+//				 " FROM t_user_loc tul having distance < 1 order by distance";
+
+//		String query="SELECT device_id, (6371 * acos (cos ( radians(?) ) * cos( radians(tul.latitude ) ) * cos( radians(tul.longitude ) - radians(?) )+sin ( radians(?) )* sin( radians(tul.latitude) ))) AS distance"+
+//				 " FROM t_user_loc tul having distance < 1 order by distance";
+
+		
+		if (task != null) {
+//			String latitude = task.getLatitude();
+//			String longitude = task.getLongtitude();
+
+			float latitude =Float.parseFloat(task.getLatitude());
+			float longitude =Float.parseFloat(task.getLongtitude());
+
+			log.info("Latitude:"+latitude);
+			log.info("Langitude:"+longitude);
+			Query queryRef = JPA.em().createNativeQuery(query);
+//			Query queryRef = JPA.em().createNativeQuery(query);
+
+//			queryRef.setParameter(1, latitude);
+//			queryRef.setParameter(2, longitude);
+//			queryRef.setParameter(3, longitude);
+
+			return queryRef.getResultList();
+		}
+
+		return Collections.emptyList();
 	}
 
 }

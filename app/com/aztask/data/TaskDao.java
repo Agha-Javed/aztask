@@ -20,11 +20,12 @@ public class TaskDao {
 	
 	ALogger logger=play.Logger.of(this.getClass());
 
-	public boolean createTask(TaskVO task){
+	public int createTask(TaskVO task){
 		logger.info("createTask:: saving task for user");
 		EntityManager entityManager=JPA.em();
 		entityManager.persist(task);
-		return true;
+		logger.info("createTask:: Task saved::"+task.getTask_id());
+		return task.getTask_id()>0 ? task.getTask_id() : -1;
 	}
 
 	public List<TaskVO> newTasks() throws SQLException {
@@ -47,6 +48,11 @@ public class TaskDao {
 		}
 		System.out.println("Total Retrieved tasks:" + tasks.size());
 		return tasks;
-
+	}
+	
+	public TaskVO getTaskById(int taskId){
+		logger.info("Findding Task by id:"+taskId);
+		EntityManager entityManager=JPA.em();
+		return entityManager.find(TaskVO.class, taskId);
 	}
 }

@@ -21,6 +21,11 @@ public class TaskVO implements Serializable {
 	private String task_desc;
 	private String task_categories;
 	private int user_id;
+	
+	private String latitude;
+	private String longitude;
+	private String device_id;
+
 
 	public TaskVO() {
 
@@ -31,6 +36,17 @@ public class TaskVO implements Serializable {
 		this.task_desc = task_desc;
 		this.task_categories = task_categories;
 		this.user_id = user_id;
+	}
+
+	
+	public TaskVO(String task_desc, String task_categories, int user_id,String latitude, String longitude, String deviceId) {
+		super();
+		this.task_desc = task_desc;
+		this.task_categories = task_categories;
+		this.user_id = user_id;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.device_id = deviceId;
 	}
 
 	public int getTask_id() {
@@ -65,9 +81,29 @@ public class TaskVO implements Serializable {
 		this.user_id = user_id;
 	}
 
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	public String getLongtitude() {
+		return longitude;
+	}
+	public void setLongtitude(String longitude) {
+		this.longitude = longitude;
+	}
+	public String getDevice_id() {
+		return device_id;
+	}
+	public void setDevice_id(String deviceId) {
+		this.device_id = deviceId;
+	}
+	
 	@Override
 	public String toString() {
 		return "TaskVO [task_desc=" + task_desc + "]";
 	}
+
 
 }
