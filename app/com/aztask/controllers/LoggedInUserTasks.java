@@ -7,9 +7,10 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.aztask.business.Task;
 import com.aztask.business.User;
 import com.aztask.service.TaskService;
+import com.aztask.service.UserService;
+import com.aztask.vo.AcceptedTaskVO;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -52,5 +53,19 @@ public class LoggedInUserTasks extends Controller {
 		log.info("Got request to show user tasks -> user_id "+userId);
 		return ok(Json.toJson(new User().tasksByUserId(userId)));
 	}
+	
+	@Transactional
+	public static Result acceptTask(int userId,int taskId) throws Exception{
+		log.info("Accepting task.");
+		
+		log.info("User "+userId+" is accepting task:"+taskId);
+		
+		UserService userService=UserService.getInstance();
+		userService.acceptTask(new AcceptedTaskVO(userId, taskId));
+
+		return ok(Json.toJson(new Reply("200", "Task Accepted")));
+		
+	}
+	
 
 }

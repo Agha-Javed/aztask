@@ -32,6 +32,15 @@ public class User {
 		return new UserDao().tasksByUserId(userId);
 	}
 	
+	public UserVO userByTaskId(int taskId){
+		
+		TaskVO taskVO=new Task().getTaskById(taskId);
+		if(taskVO!=null){
+			return new UserDao().getUserById(taskVO.getUser_id());
+		}
+		return null;
+	}
+	
 	public List<NearbyUser> getNearbyUsers(TaskVO task){
 		return new UserDao().getNearbyUsers(task);
 	}

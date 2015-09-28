@@ -42,11 +42,24 @@ public class UserDao {
 		return (userList!=null && userList.size()==1) ? true:false;
 	}
 	
+
+	/**
+	 * @param userId
+	 * @return
+	 * 
+	 * Return the list of tasks by this User.
+	 */
 	public List<TaskVO> tasksByUserId(int userId){
 		Query query=JPA.em().createQuery("SELECT t FROM TaskVO t where t.user_id=:user_id");
 		return query.setParameter("user_id", userId).getResultList();
 	}
+
 	
+	public UserVO getUserById(int userId){
+		EntityManager entityManager=JPA.em();
+		return entityManager.find(UserVO.class, userId);
+	}
+
 	/**
 	 * @param task , this task is newly added by users, so we need to find all users nearby on the basis of coordinates.
 	 * @return

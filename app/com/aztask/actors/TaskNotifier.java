@@ -30,7 +30,7 @@ public class TaskNotifier extends UntypedActor {
 	
 	
 	@Override
-	public void onReceive(Object obj) throws Exception {
+	public void onReceive(final Object obj) throws Exception {
 		log.info("Received Task from supervisor:"+sender().path().name());
 		log.info("Notifying all consumers.");
 		

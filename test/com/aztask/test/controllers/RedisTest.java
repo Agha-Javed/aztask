@@ -2,9 +2,6 @@ package com.aztask.test.controllers;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-
-import net.spy.memcached.MemcachedClient;
-
 import org.apache.commons.pool2.impl.GenericObjectPool;
 
 import redis.clients.jedis.Jedis;
@@ -23,6 +20,7 @@ public class RedisTest {
 		  
 		 // jConfig.setWhenExhaustedAction(GenericObjectPool.MEAN_TIMING_STATS_CACHE_SIZE);
 		  JedisPool pool = new JedisPool(jConfig, "192.168.56.101", 6379);
+
 		  //JedisPool pool = new JedisPool(jConfig, "127.0.0.1", 6379);
 		  
 		  

@@ -28,7 +28,7 @@ public class TaskCreator extends UntypedActor{
 	}
 
 	@Override
-	public void onReceive(Object task) throws Exception {
+	public void onReceive(final Object task) throws Exception {
 		log.info("Received Task from supervisor:"+sender().path().name());
 		log.info("Saving Task into DB");
 		

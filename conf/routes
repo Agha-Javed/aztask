@@ -17,6 +17,8 @@ POST	/user/:id/is_registered			 com.aztask.controllers.UserRegisteration.isUserR
 POST	/user/:id/createTask			 com.aztask.controllers.LoggedInUserTasks.createTask(id: Int)
 POST	/user/deleteTask				 com.aztask.controllers.LoggedInUserTasks.deleteTask()
 POST	/user/updateTask				 com.aztask.controllers.LoggedInUserTasks.updateTask()
+GET		/user/:id/acceptTask/:taskId	 com.aztask.controllers.LoggedInUserTasks.acceptTask(id: Int, taskId: Int)
+
 GET		/user/:id/tasks					 com.aztask.controllers.LoggedInUserTasks.userTasks(id: Int)
 
 
