@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import play.Logger;
-import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -29,7 +28,6 @@ public class UserRegisteration extends Controller {
 	 * @return success code.
 	 */
 	@BodyParser.Of(BodyParser.Json.class)
-	@Transactional
 	public static Result registerUser() throws Exception {
 		JsonNode userNode = request().body().asJson();
 
@@ -53,7 +51,6 @@ public class UserRegisteration extends Controller {
 	 * @throws Exception
 	 */
 	@BodyParser.Of(BodyParser.Json.class)
-	@Transactional(readOnly=true)
 	public static Result isUserRegistered(int userId) throws Exception {
 		
 		logger.info("isUserRegistered :"+userId);
@@ -61,7 +58,7 @@ public class UserRegisteration extends Controller {
 		JsonNode requestNode = request().body().asJson();
 		if (requestNode.size() > 0) {
 			String deviceId = requestNode.get("device-id").textValue();
-			return ok(Json.toJson(new User().isUserRegistered(userId,deviceId)));
+			return ok(Json.toJson(new User().isUserRegistered(deviceId)));
 		}
 
 		return ok(Json.toJson(new Reply("400", "Invalid Request")));

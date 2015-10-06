@@ -1,9 +1,6 @@
 package com.aztask.test.controllers;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

@@ -5,12 +5,12 @@
 # Home page
 GET     /                           	 com.aztask.controllers.Application.index()
 GET     /task                            com.aztask.controllers.Application.task()
-GET     /redis                           com.aztask.controllers.Application.redis()
 
 
 GET     /tasks/list/new                  com.aztask.controllers.UserTasks.newTasks()
 GET     /tasks/list/featured             com.aztask.controllers.UserTasks.featuredTasks()
 GET     /tasks/list/nearby               com.aztask.controllers.UserTasks.nearbyTasks()
+GET     /tasks/task/:id                  com.aztask.controllers.UserTasks.taskById(id: Int)
 
 POST	/user/register					 com.aztask.controllers.UserRegisteration.registerUser()
 POST	/user/:id/is_registered			 com.aztask.controllers.UserRegisteration.isUserRegistered(id: Int)

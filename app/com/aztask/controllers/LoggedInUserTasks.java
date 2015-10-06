@@ -1,7 +1,6 @@
 package com.aztask.controllers;
 
 import play.Logger.ALogger;
-import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -21,7 +20,6 @@ public class LoggedInUserTasks extends Controller {
 	public static ALogger log=play.Logger.of(com.aztask.controllers.LoggedInUserTasks.class);
 
 	@BodyParser.Of(BodyParser.Json.class)
-	@Transactional
 	public static Result createTask(int userId) throws Exception {
 		
 		log.info("Creating task for user ::"+userId);
@@ -48,13 +46,17 @@ public class LoggedInUserTasks extends Controller {
 		return ok(Json.toJson(new Reply("200", "Task Deleted")));
 	}
 	
-	@Transactional(readOnly=true)
 	public static Result userTasks(int userId){
 		log.info("Got request to show user tasks -> user_id "+userId);
 		return ok(Json.toJson(new User().tasksByUserId(userId)));
 	}
 	
-	@Transactional
+	public static Result userTaskByTaskId(int userId,int taskId){
+		log.info("Got request to show user tasks -> user_id "+userId);
+		return ok(Json.toJson(new User().tasksByUserId(userId)));
+	}
+
+	
 	public static Result acceptTask(int userId,int taskId) throws Exception{
 		log.info("Accepting task.");
 		

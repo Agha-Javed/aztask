@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Task">
+
+	<resultMap id="taskResultMap" type="com.aztask.vo.TaskVO">
+		<id property="task_id" column="task_id" />
+		<result property="task_desc" column="task_desc" />
+		<result property="task_categories" column="task_categories" />
+		<result property="user_id" column="user_id" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="device_id" column="device_id" />
+	</resultMap>
+	
+	<select id="tasksByUserId" parameterType="int" resultType="com.aztask.vo.TaskVO">
+		select * from t_task where user_id=#{id}
+	</select>
+
+	<select id="getTaskById" resultType="com.aztask.vo.TaskVO">
+		select * from t_task where task_id = #{id}
+	</select>
+
+	<insert id="saveTask" parameterType="com.aztask.vo.TaskVO" useGeneratedKeys="true"
+		keyProperty="task_id" keyColumn="task_id">
+		INSERT INTO t_task
+		(`task_desc`,
+		`task_categories`,
+		`user_id`,
+		`latitude`,
+		`longitude`,
+		`device_id`)
+		VALUES
+		(#{task_desc},#{task_categories},#{user_id},#{latitude},#{longitude},#{device_id});
+		<selectKey keyProperty="task_id" resultType="int" order="AFTER">
+			SELECT
+			LAST_INSERT_ID();
+		</selectKey>
+	</insert>
+	
+	
+</mapper>
+
+
+

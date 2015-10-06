@@ -2,47 +2,35 @@ package com.aztask.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 
-
-@Entity
-@Table(name="t_user")
 public class UserVO implements Serializable{
 
 	private static final long serialVersionUID = 8024117153604192506L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String name;
 	private String contact;
 	private String email;
 	private String skills;
-	
-	@Column(name="device_id")
-	private String deviceId;
+	private String device_id;
 
 	public UserVO() {
 
 	}
 
-	public UserVO(String name, String contact, String email, String skills) {
+	public UserVO(String name, String contact, String email, String skills,String device_id) {
 		this.name = name;
 		this.contact = contact;
 		this.email = email;
 		this.skills = skills;
+		this.device_id=device_id;
 	}
 
 	public UserVO(int id, String name, String contact, String email,
-			String skills) {
-		this(name, contact, email, skills);
+			String skills,String device_id) {
+		this(name, contact, email, skills,device_id);
 		this.id = id;
 	}
 
@@ -87,12 +75,12 @@ public class UserVO implements Serializable{
 		this.skills = skills;
 	}
 
-	public String getDeviceId() {
-		return deviceId;
+	public String getDevice_Id() {
+		return device_id;
 	}
 
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
+	public void setDevice_Id(String deviceId) {
+		this.device_id = deviceId;
 	}
 
 

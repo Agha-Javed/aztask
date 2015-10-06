@@ -4,8 +4,6 @@ import com.aztask.business.User;
 import com.aztask.vo.AcceptedTaskVO;
 import com.aztask.vo.UserVO;
 import play.Logger.ALogger;
-import play.db.jpa.JPA;
-import play.libs.F;
 import akka.actor.UntypedActor;
 
 public class TaskAcceptor extends UntypedActor {
@@ -20,19 +18,14 @@ public class TaskAcceptor extends UntypedActor {
 		// details of this consumer.
 
 		try {
-			JPA.withTransaction(new F.Callback0() {
-				@Override
-				public void invoke() throws Throwable {
-					AcceptedTaskVO acceptedTask = (AcceptedTaskVO) obj;
-					log.info("" + acceptedTask);
-					int taskId = acceptedTask.getTaskId();
-					UserVO userVO = new User().userByTaskId(taskId);
-					if (userVO != null) {
-						log.info("Fetched producer:" + userVO);
-					}
-					sender().tell("Success", self());
-				}
-			});
+			AcceptedTaskVO acceptedTask = (AcceptedTaskVO) obj;
+			log.info("" + acceptedTask);
+			int taskId = acceptedTask.getTaskId();
+			UserVO userVO = new User().userByTaskId(taskId);
+			if (userVO != null) {
+				log.info("Fetched producer:" + userVO);
+			}
+			sender().tell("Success", self());
 		} catch (Throwable e) {
 			throw new Exception(e);
 		}
