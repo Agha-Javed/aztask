@@ -42,5 +42,10 @@ public class NearbyUser implements Serializable {
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
+
+	@Override
+	public String toString() {
+		return "NearbyUser [device_id=" + device_id + "]";
+	}
 	
 }

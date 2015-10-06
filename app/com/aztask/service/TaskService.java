@@ -16,7 +16,6 @@ public class TaskService {
 	
 	public Reply createTask(TaskVO task){
 		task_service_log.info("TaskService: creating task.");
-    	//ActorRef myActor = Akka.system().actorOf(Props.create(TaskSupervisor.class),"ParentActor");
     	ActorSelection parentActor = Akka.system().actorSelection("/user/ParentActor");
     	parentActor.tell(task, parentActor.anchor());
     	return new Reply("200", "Success");

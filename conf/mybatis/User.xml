@@ -26,7 +26,7 @@
     select * from t_user where user_id = #{id}
   </select>
   
-  <select id="getNearbyUsers" resultType="com.aztask.vo.UserVO">
+  <select id="getNearbyUsers" resultType="com.aztask.vo.NearbyUser">
 
 	<![CDATA[ SELECT device_id, (6371 * acos (cos ( radians(#{latitude}) ) * cos( radians(tul.latitude ) ) * 
 	 		cos( radians(tul.longitude ) - radians(#{longitude}) )+sin ( radians(#{latitude}) ) * sin( radians(tul.latitude) ))) AS distance

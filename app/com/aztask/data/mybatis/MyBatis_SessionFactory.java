@@ -1,15 +1,10 @@
 package com.aztask.data.mybatis;
 
 import java.io.InputStream;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
-
 import com.aztask.util.Constants;
-
-import play.Play;
 import play.cache.Cache;
 
 public class MyBatis_SessionFactory {
@@ -27,16 +22,8 @@ public class MyBatis_SessionFactory {
 			{
 				if (sqlSessionFactory == null)
 				{
-
 					InputStream inputStream =MyBatis_SessionFactory.class.getResourceAsStream(Constants.MYBATIS_CONF_FILE_NAME);
-					System.out.println("Resource:"+inputStream);
-//					System.out.println("Resource:"+inputStream);
-
-			//		InputStream inputStream =Play.application().resourceAsStream(Constants.MYBATIS_CONF_FILE_NAME);
-					System.out.println("Resource:"+inputStream);
-
-
-					SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+					sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			    	Cache.set(Constants.MYBATIS_SESSION_FACTORY, sqlSessionFactory);
 				}
 			}            

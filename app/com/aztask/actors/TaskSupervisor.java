@@ -1,13 +1,11 @@
 package com.aztask.actors;
 
 import play.libs.Akka;
-
 import com.aztask.vo.AcceptedTaskVO;
 import com.aztask.vo.ActorReply;
 import com.aztask.vo.TaskVO;
-
 import akka.actor.ActorRef;
-import akka.actor.PoisonPill;
+import akka.actor.ActorSelection;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.event.Logging;
@@ -22,33 +20,44 @@ public class TaskSupervisor extends UntypedActor{
 	@Override
 	public void onReceive(Object obj) throws Exception {
 		if(obj instanceof Boolean){
-	    	ActorRef creatorRef=Akka.system().actorOf(Props.create(TaskCreator.class,"TaskCreator"));
+	    	/*
+	    	 * This is the main part, where all child actors will be created, as of now we have two main child actors
+	    	 * 
+	    	 * TaskCreater , This child actor will save task into DB
+	    	 * 
+	    	 * TaskNotifier , Once task saved by TaskCreator, this actor will notify all related users.
+	    	 */
+			
+			ActorRef creatorRef=getContext().actorOf(Props.create(TaskCreator.class),"TaskCreator");
 	    	log.info("Task Creator Actor has been created."+creatorRef.path());
-	    	ActorRef notifierRef=Akka.system().actorOf(Props.create(TaskNotifier.class,"TaskNotifier"));
+
+	    	ActorRef notifierRef=getContext().actorOf(Props.create(TaskNotifier.class),"TaskNotifier");
 	    	log.info("Task Notifier Actor has been created."+notifierRef.path());
+	    	
 		}else if(obj instanceof TaskVO){
-	    	ActorRef taskCreator = Akka.system().actorOf(Props.create(TaskCreator.class,"TaskCreator"));
-	    	log.info("Task Creator Actor has been created."+taskCreator.path());
-	    	log.info("Sending task to Child:");
+	    	
+			log.info("Recieved new task, delegating to TaskCreater worker.");
+			ActorSelection taskCreator = Akka.system().actorSelection("/user/ParentActor/TaskCreator");
 	    	taskCreator.tell((TaskVO)obj, self());
-		}else if(obj instanceof String){
-			log.info("Got reply from Child:"+obj);
-			ActorRef actorRef=sender();
-			log.info("Got reply from Child:"+actorRef.path().name());
-			actorRef.tell(PoisonPill.getInstance(), null);
+	    	
 		}else if(obj instanceof ActorReply){
+			/**
+			 * Once task has been created, a notifier needs to notify all related users.
+			 */
 			if( ( (ActorReply)obj ).isSuccess()){
-				log.info("The task have been saved, Sending Notifications to All.");
-		    	ActorRef taskNotifier = Akka.system().actorOf(Props.create(TaskNotifier.class));
-		    	log.info("Task Creator Actor has been created."+taskNotifier.path());
+				log.info("The task have been saved, Sending Notifications to all related users.");
+		    	ActorSelection taskNotifier = Akka.system().actorSelection("/user/ParentActor/TaskNotifier");
 		    	taskNotifier.tell(obj,self());
 			}
+			
 		}else if(obj instanceof AcceptedTaskVO){
-			log.info("The task has been accepted by User.");
+			log.info("The task has been accepted by User, delegating it to TaskAcceptor worker.");
 	    	ActorRef taskAcceptor = Akka.system().actorOf(Props.create(TaskAcceptor.class));
-	    	log.info("Task Acceptor Actor has been created."+taskAcceptor.path());
 	    	taskAcceptor.tell(obj,self());
 		}else{
+			/**
+			 * Unattainted message should be saved into some kind of log table for later processing.
+			 */
 			log.info("received unknown message");
 		}
 	}

@@ -15,7 +15,7 @@ import play.mvc.Result;
 /**
  * @author Javed
  * 
- *         This controller will receive json data and will register user.
+ *This controller will receive json data and will register user.
  *
  */
 public class UserRegisteration extends Controller {

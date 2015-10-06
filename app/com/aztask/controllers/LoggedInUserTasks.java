@@ -35,7 +35,7 @@ public class LoggedInUserTasks extends Controller {
 			return ok(Json.toJson(taskService.createTask(task)));
 		}
 
-		return ok(Json.toJson(new Reply("400", "Invalid Request")));
+		return ok(Json.toJson(new Reply("200", "You task is being processed.")));
 	}
 
 	public static Result updateTask() {
