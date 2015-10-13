@@ -12,15 +12,8 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-/**
- * @author Javed
- * 
- *This controller will receive json data and will register user.
- *
- */
-public class UserRegisteration extends Controller {
-
-	final static Logger.ALogger logger = Logger.of(UserRegisteration.class);
+public class UserController extends Controller{
+	final static Logger.ALogger logger = Logger.of(UserController.class);
 
 	/**
 	 * The method will get json data to register user in a system.
@@ -42,6 +35,7 @@ public class UserRegisteration extends Controller {
 		return ok(Json.toJson(new Reply("400", "Invalid Request")));
 	}
 
+	
 	/**
 	 * This method will check, whether the device is registered or not. if it is
 	 * not registered then user will be navigated to registerion screen
@@ -64,4 +58,7 @@ public class UserRegisteration extends Controller {
 		return ok(Json.toJson(new Reply("400", "Invalid Request")));
 
 	}
+	
+	
+
 }
