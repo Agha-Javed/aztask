@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.aztask.data.TaskDao;
 import com.aztask.data.mybatis.TaskDaoImpl_MyBatis;
-import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
 import com.aztask.vo.TaskVO;
 
 public class Task {
