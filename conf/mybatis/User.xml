@@ -23,7 +23,7 @@
   </select>
 
   <select id="getUserById" resultType="com.aztask.vo.UserVO">
-    select * from t_user where user_id = #{id}
+    select * from t_user where id = #{id}
   </select>
   
   <select id="getNearbyUsers" resultType="com.aztask.vo.NearbyUser">
@@ -33,7 +33,20 @@
 	  		FROM t_user_loc tul having distance < 1 order by distance  ]]>
   </select>
 
+
+ <update id="updateUser">
+ 
+ 	update t_user set name=#{name},contact=#{contact},email=#{email},skills=#{skills} where device_id=#{device_id}	
+ 
+ </update>
   
+  <select id="login_by_email" resultType="int">
+  	select count(*) from t_user where email=#{email} and device_id=#{deviceId}
+  </select>
+
+  <select id="login_by_phone">
+  	select count(*) from t_user
+  </select>
   
   
 </mapper>

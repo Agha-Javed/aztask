@@ -4,25 +4,24 @@
 
 # Home page
 GET     /                           	 com.aztask.controllers.Application.index()
-GET     /task                            com.aztask.controllers.Application.task()
 
 
-GET     /tasks/list/new                  com.aztask.controllers.UserTasks.newTasks()
-GET     /tasks/list/featured             com.aztask.controllers.UserTasks.featuredTasks()
-GET     /tasks/list/nearby               com.aztask.controllers.UserTasks.nearbyTasks()
-GET     /tasks/task/:id                  com.aztask.controllers.UserTasks.taskById(id: Int)
-
-POST	/user/register					 com.aztask.controllers.UserRegisteration.registerUser()
-POST	/user/:id/is_registered			 com.aztask.controllers.UserRegisteration.isUserRegistered(id: Int)
-POST	/user/:id/createTask			 com.aztask.controllers.LoggedInUserTasks.createTask(id: Int)
-POST	/user/deleteTask				 com.aztask.controllers.LoggedInUserTasks.deleteTask()
-POST	/user/updateTask				 com.aztask.controllers.LoggedInUserTasks.updateTask()
-GET		/user/:id/acceptTask/:taskId	 com.aztask.controllers.LoggedInUserTasks.acceptTask(id: Int, taskId: Int)
-
-GET		/user/:id/tasks					 com.aztask.controllers.LoggedInUserTasks.userTasks(id: Int)
+# UserController is going to handle all user related activities
+POST	/user/register					 com.aztask.controllers.UserController.registerUser()
+POST	/user/:id/is_registered			 com.aztask.controllers.UserController.isUserRegistered(id: Int)
 
 
+# TaskController is going to handle all user related activities
+GET     /tasks/list/new                  com.aztask.controllers.TaskController.newTasks()
+GET     /tasks/list/featured             com.aztask.controllers.TaskController.featuredTasks()
+GET     /tasks/list/nearby               com.aztask.controllers.TaskController.nearbyTasks()
+GET     /tasks/task/:id                  com.aztask.controllers.TaskController.taskById(id: Int)
+GET		/user/:id/acceptTask/:taskId	 com.aztask.controllers.TaskController.acceptTask(id: Int, taskId: Int)
+GET		/user/:id/tasks					 com.aztask.controllers.TaskController.userTasksById(id: Int)
 
+POST	/user/:id/createTask			 com.aztask.controllers.TaskController.createTask(id: Int)
+POST	/user/deleteTask				 com.aztask.controllers.TaskController.deleteTask()
+POST	/user/updateTask				 com.aztask.controllers.TaskController.updateTask()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -100,7 +100,7 @@ public class UserController extends Controller{
 	 * @throws Exception
 	 */
 	@BodyParser.Of(BodyParser.Json.class)
-	public static Result isUserRegistered() throws Exception {
+	public static Result isUserRegistered(int userId) throws Exception {
 		logger.info("Checking if user exists.");
 		JsonNode requestNode = request().body().asJson();
 		if (requestNode.size() > 0) {

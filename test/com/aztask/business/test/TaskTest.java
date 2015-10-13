@@ -3,10 +3,7 @@ package com.aztask.business.test;
 import java.util.List;
 
 import org.junit.*;
-
-import play.db.jpa.JPA;
 import play.test.Helpers;
-
 import com.aztask.business.Task;
 import com.aztask.vo.TaskVO;
 
