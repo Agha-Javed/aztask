@@ -1,15 +1,12 @@
 package com.aztask.controllers;
 
 import com.aztask.business.Task;
-import com.aztask.business.User;
 import com.aztask.service.TaskService;
-import com.aztask.service.UserService;
 import com.aztask.vo.AcceptedTaskVO;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import play.Logger.ALogger;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -47,22 +44,15 @@ public class TaskController extends Controller {
 		return ok(Json.toJson(new Reply("200", "Task Deleted")));
 	}
 
-	public static Result userTasks(int userId) {
+	public static Result userTasksById(int userId) {
 		logger.info("Got request to show user tasks -> user_id " + userId);
-		return ok(Json.toJson(new User().tasksByUserId(userId)));
-	}
-
-	public static Result userTaskByTaskId(int userId, int taskId) {
-		logger.info("Got request to show user tasks -> user_id " + userId);
-		return ok(Json.toJson(new User().tasksByUserId(userId)));
+		return ok(Json.toJson(new Task().tasksByUserId(userId)));
 	}
 
 	public static Result acceptTask(int userId, int taskId) throws Exception {
 		logger.info("Accepting task.");
 		logger.info("User " + userId + " is accepting task:" + taskId);
-		UserService userService = UserService.getInstance();
-		userService.acceptTask(new AcceptedTaskVO(userId, taskId));
-		return ok(Json.toJson(new Reply("200", "Task Accepted")));
+		return ok(Json.toJson(TaskService.getInstance().acceptTask(new AcceptedTaskVO(userId, taskId))));
 	}
 
 	public static Result newTasks() throws Exception {

@@ -1,8 +1,10 @@
 package com.aztask.business;
 
 import java.util.List;
+
 import com.aztask.data.TaskDao;
 import com.aztask.data.mybatis.TaskDaoImpl_MyBatis;
+import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
 import com.aztask.vo.TaskVO;
 
 public class Task {
@@ -27,5 +29,10 @@ public class Task {
 		TaskDao taskDao=new TaskDaoImpl_MyBatis();
 		return taskDao.tasksByUserId(userId);
 	}
+	
+	public List<TaskVO> tasksByUserId(int userId){
+		return new TaskDaoImpl_MyBatis().tasksByUserId(userId);
+	}
+	
 	
 }

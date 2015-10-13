@@ -3,6 +3,8 @@ package com.aztask.service;
 import play.Logger.ALogger;
 import play.libs.Akka;
 import akka.actor.ActorSelection;
+
+import com.aztask.vo.AcceptedTaskVO;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 
@@ -22,6 +24,13 @@ public class TaskService {
 	}
 	
 	
+	public Reply acceptTask(AcceptedTaskVO acceptedTaskVO){
+		task_service_log.info("Accepting task"+acceptedTaskVO);
+    	ActorSelection parentActor = Akka.system().actorSelection("/user/ParentActor");
+    	parentActor.tell(acceptedTaskVO, parentActor.anchor());
+    	return new Reply("200", "Success");
+	}
+
 	synchronized public static TaskService getInstance(){
 		task_service_log.info("Initializing TaskService");
 		if(taskService==null){

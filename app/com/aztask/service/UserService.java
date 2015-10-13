@@ -1,12 +1,11 @@
 package com.aztask.service;
 
-import akka.actor.ActorSelection;
 
-import com.aztask.vo.AcceptedTaskVO;
+import com.aztask.business.User;
+import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
-
+import com.aztask.vo.UserVO;
 import play.Logger.ALogger;
-import play.libs.Akka;
 
 public class UserService {
 
@@ -15,15 +14,29 @@ public class UserService {
 	private static UserService userService;
 
 	
-	public Reply acceptTask(AcceptedTaskVO acceptedTaskVO){
-		user_service_log.info("Accepting task"+acceptedTaskVO);
-    	ActorSelection parentActor = Akka.system().actorSelection("/user/ParentActor");
-    	parentActor.tell(acceptedTaskVO, parentActor.anchor());
-    	return new Reply("200", "Success");
+	public Reply registerUser(UserVO user){
+    	return new User().registerUser(user);
+
+	}
+
+	public Reply login(Login loginCredentials){
+		return null;
+	}
+
+	//TODO I have to update this method
+	public Reply updateUserProfile(UserVO user){
+    	return new User().registerUser(user);
+	}
+
+	
+	public Reply isUserRegistered(String deviceId){
+		return new User().isUserRegistered(deviceId);
 	}
 	
+	
+	
 	synchronized public static UserService getInstance(){
-		user_service_log.info("Initializing TaskService");
+		user_service_log.info("Initializing UserService");
 		if(userService==null){
 			userService=new UserService();
 		}

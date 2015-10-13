@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import play.Logger.ALogger;
 
 import com.aztask.data.UserDao;
+import com.aztask.vo.Login;
 import com.aztask.vo.NearbyUser;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
@@ -38,6 +39,24 @@ public class UserDaoImpl_MyBatis implements UserDao{
 	}
 	
 	@Override
+	public boolean login(Login loginCredentials) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("UserDaoImpl_MyBatis - > login:: checking login");
+		String query="";
+		if(loginCredentials!=null && loginCredentials.getEmail()!=null){
+			query="User.login_by_email";
+		}else if(loginCredentials!=null && loginCredentials.getPhoneNumber()!=null){
+			query="User.login_by_phone";
+		}
+		logger.info("UserDaoImpl_MyBatis - > login:: query: "+query);
+		int count=session.selectOne(query,loginCredentials);
+		logger.info("UserDaoImpl_MyBatis - > login:: user found:"+count);
+		return (count==1) ? true: false;
+	}
+	
+	
+	
+	@Override
 	public boolean isUserRegistered(String userDeviceId){
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		logger.info("UserDaoImpl_MyBatis - > isUserRegistered::");
@@ -57,9 +76,13 @@ public class UserDaoImpl_MyBatis implements UserDao{
 	}
 	
 	@Override
-	public List<TaskVO> tasksByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean updateUserProfile(UserVO userVO) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		session.update("User.updateUser",userVO);
+		logger.info("UserDaoImpl_MyBatis - > registerUser:: User saved "+userVO);
+		session.commit();
+		session.close();
+		return true;
 	}
 
 }
