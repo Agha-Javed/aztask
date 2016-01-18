@@ -34,6 +34,10 @@ public class TaskSupervisor extends UntypedActor{
 	    	ActorRef notifierRef=getContext().actorOf(Props.create(TaskNotifier.class),"TaskNotifier");
 	    	log.info("Task Notifier Actor has been created."+notifierRef.path());
 	    	
+	    	ActorRef taskAcceptor = Akka.system().actorOf(Props.create(TaskAcceptor.class));
+			log.info("Task Acceptor Actor has been created."+taskAcceptor.path());
+
+	    	
 		}else if(obj instanceof TaskVO){
 	    	
 			log.info("Recieved new task, delegating to TaskCreater worker.");
@@ -52,7 +56,7 @@ public class TaskSupervisor extends UntypedActor{
 			
 		}else if(obj instanceof AcceptedTaskVO){
 			log.info("The task has been accepted by User, delegating it to TaskAcceptor worker.");
-	    	ActorRef taskAcceptor = Akka.system().actorOf(Props.create(TaskAcceptor.class));
+	    	ActorSelection taskAcceptor = Akka.system().actorSelection("/user/ParentActor/TaskAcceptor");
 	    	taskAcceptor.tell(obj,self());
 		}else{
 			/**

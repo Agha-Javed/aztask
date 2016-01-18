@@ -17,6 +17,14 @@ public class TaskController extends Controller {
 
 	public static ALogger logger = play.Logger.of(TaskController.class);
 
+
+	public static Result newTasks() throws Exception {
+		logger.info("info Testing Logging.");
+		TaskService taskService = TaskService.getInstance();
+		return ok(Json.toJson(taskService.newTasks()));
+	}
+
+	
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result createTask(int userId) throws Exception {
 
@@ -46,23 +54,13 @@ public class TaskController extends Controller {
 
 	public static Result userTasksById(int userId) {
 		logger.info("Got request to show user tasks -> user_id " + userId);
-		return ok(Json.toJson(new Task().tasksByUserId(userId)));
+		return ok(Json.toJson(TaskService.getInstance().allTasksOfUser(userId)));
 	}
 
 	public static Result acceptTask(int userId, int taskId) throws Exception {
 		logger.info("Accepting task.");
 		logger.info("User " + userId + " is accepting task:" + taskId);
 		return ok(Json.toJson(TaskService.getInstance().acceptTask(new AcceptedTaskVO(userId, taskId))));
-	}
-
-	public static Result newTasks() throws Exception {
-		logger.info("info Testing Logging.");
-		return ok(Json.toJson(new Task().newTasks()));
-	}
-
-	public static Result userTaskById() throws Exception {
-		logger.info("info Testing Logging.");
-		return ok(Json.toJson(new Task().newTasks()));
 	}
 
 	public static Result taskById(int taskId) throws Exception {

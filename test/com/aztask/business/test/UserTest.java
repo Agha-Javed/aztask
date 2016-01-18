@@ -1,19 +1,13 @@
 package com.aztask.business.test;
 
 import static play.test.Helpers.running;
-
 import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
-
 import play.test.Helpers;
-
 import com.aztask.business.Task;
 import com.aztask.business.User;
-import com.aztask.data.mybatis.TaskDaoImpl_MyBatis;
 import com.aztask.vo.Login;
-import com.aztask.vo.NearbyUser;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
@@ -50,17 +44,19 @@ public class UserTest {
 	
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void findNearByUsers() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
 				User user=new User();
 				TaskVO taskVO=new Task().getTaskById(19);
-				List<NearbyUser> nearbyUsers=user.getNearbyUsers(taskVO);
+				List<UserVO> nearbyUsers=user.nearByUsers(taskVO);
 				System.out.println("User exists :" + nearbyUsers.size());
 			}
 		});
 	}// end method
+	
+
 	
 	@Test
 	@Ignore
@@ -76,6 +72,7 @@ public class UserTest {
 	
 	
 	@Test
+	@Ignore
 	public void login() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {

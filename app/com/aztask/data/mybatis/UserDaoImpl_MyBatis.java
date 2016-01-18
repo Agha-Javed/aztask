@@ -1,6 +1,8 @@
 package com.aztask.data.mybatis;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -8,25 +10,36 @@ import play.Logger.ALogger;
 
 import com.aztask.data.UserDao;
 import com.aztask.vo.Login;
-import com.aztask.vo.NearbyUser;
+import com.aztask.vo.NearByDevice;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
 
 public class UserDaoImpl_MyBatis implements UserDao{
 	
 	ALogger logger=play.Logger.of(this.getClass());
-
+	
 	public UserDaoImpl_MyBatis() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 	@Override
-	public List<NearbyUser> getNearbyUsers(TaskVO task) {
+	public List<UserVO> findNearByUsers(TaskVO task) {
 		SqlSession session=MyBatis_SessionFactory.openSession();
-		List<NearbyUser> users=session.selectList("User.getNearbyUsers", task);//''selectList("Task.getTaskById", userId);
-		logger.info("UserDaoImpl_MyBatis - > getNearbyUsers:: number of nearby users "+users.size());
-		return users;
+		List<NearByDevice> nearByDevices=session.selectList("User.getNearbyDevices", task);//''selectList("Task.getTaskById", userId);
+		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: number of nearby devices "+nearByDevices.size());
+		String deviceIds=getWhereCluase(nearByDevices);
+		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: near by devices "+deviceIds);
+		String skills=getLikeClause(task);
+		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: skills to find for "+skills);
+		
+		Map<String, String> params=new HashMap<String, String>();
+		params.put("deviceIds", deviceIds);
+		params.put("skills", skills);
+
+		List<UserVO> relatedUsers=session.selectList("User.selectNearbyUsers",params);
+		return relatedUsers;
+		//return session.getMapper(NearbyUserWrapper.class).nearByUsers(deviceIds, skills);
 	}
 	
 	@Override
@@ -84,5 +97,28 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		session.close();
 		return true;
 	}
+	
+	
+	public String getWhereCluase(List<NearByDevice> nearByUsers){
+		StringBuffer whereCluase=new StringBuffer("(");
+		for(NearByDevice nearByUser: nearByUsers){
+			whereCluase.append("'"+nearByUser.getDevice_id()+"',");
+		}
+		whereCluase.deleteCharAt(whereCluase.length()-1);
+		whereCluase.append(")");
+		return whereCluase.toString();
+	}
+	
+	public String getLikeClause(TaskVO taskVO){
+		
+		StringBuffer likeCluase=new StringBuffer();
+		for(String taskCategory : taskVO.getTask_categories().split(";")){
+			likeCluase.append(" skills like '%"+taskCategory+"%' or");
+		}
+		likeCluase.delete(likeCluase.length()-2, likeCluase.length());
+		return likeCluase.toString();
+		
+	}
+
 
 }

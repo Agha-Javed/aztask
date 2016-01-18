@@ -18,5 +18,6 @@
   <mappers>
     <mapper resource="mybatis/User.xml"/>
     <mapper resource="mybatis/Task.xml"/>
+    <mapper class="com.aztask.data.mybatis.NearbyUserWrapper"/>    
   </mappers>
 </configuration>

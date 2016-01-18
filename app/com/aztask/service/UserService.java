@@ -1,10 +1,14 @@
 package com.aztask.service;
 
 
+import java.util.List;
+
 import com.aztask.business.User;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
+import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
+
 import play.Logger.ALogger;
 
 public class UserService {
@@ -33,6 +37,10 @@ public class UserService {
 		return new User().isUserRegistered(deviceId);
 	}
 	
+	
+	public List<UserVO> nearByUsers(TaskVO taskVO){
+		return new User().nearByUsers(taskVO);
+	}
 	
 	
 	synchronized public static UserService getInstance(){

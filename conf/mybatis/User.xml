@@ -26,13 +26,18 @@
     select * from t_user where id = #{id}
   </select>
   
-  <select id="getNearbyUsers" resultType="com.aztask.vo.NearbyUser">
+  <select id="getNearbyDevices" resultType="com.aztask.vo.NearByDevice" >
 
 	<![CDATA[ SELECT device_id, (6371 * acos (cos ( radians(#{latitude}) ) * cos( radians(tul.latitude ) ) * 
 	 		cos( radians(tul.longitude ) - radians(#{longitude}) )+sin ( radians(#{latitude}) ) * sin( radians(tul.latitude) ))) AS distance
-	  		FROM t_user_loc tul having distance < 1 order by distance  ]]>
+	  		FROM t_user_loc tul having distance < 3 order by distance  ]]>
   </select>
 
+
+  <select id="getRelatedNearbyUsers" resultType="com.aztask.vo.UserVO">
+		select * from t_user 
+		 <where>#{longitude}</where>
+  </select>
 
  <update id="updateUser">
  
@@ -46,6 +51,10 @@
 
   <select id="login_by_phone">
   	select count(*) from t_user
+  </select>
+
+  <select id="selectNearbyUsers" parameterType="java.util.Map" resultType="com.aztask.vo.UserVO">
+  	SELECT * FROM t_user WHERE device_id in ${deviceIds} and (${skills})
   </select>
   
   

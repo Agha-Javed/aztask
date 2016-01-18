@@ -6,7 +6,6 @@ import java.util.List;
 import com.aztask.data.UserDao;
 import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
 import com.aztask.vo.Login;
-import com.aztask.vo.NearbyUser;
 import com.aztask.vo.Reply;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
@@ -69,7 +68,9 @@ public class User {
 		return null;
 	}
 	
-	public List<NearbyUser> getNearbyUsers(TaskVO task){
-		return new UserDaoImpl_MyBatis().getNearbyUsers(task);
+	public List<UserVO> nearByUsers(TaskVO task){
+		
+	    return new UserDaoImpl_MyBatis().findNearByUsers(task);
 	}
+
 }

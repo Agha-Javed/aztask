@@ -3,7 +3,6 @@ package com.aztask.data;
 import java.util.List;
 
 import com.aztask.vo.Login;
-import com.aztask.vo.NearbyUser;
 import com.aztask.vo.TaskVO;
 import com.aztask.vo.UserVO;
 
@@ -18,5 +17,5 @@ public interface UserDao {
 	public boolean isUserRegistered(String userDeviceId);
 	public boolean login(Login loginCredentials);
 	public UserVO getUserById(int userId);
-	public List<NearbyUser> getNearbyUsers(TaskVO task);
+	public List<UserVO> findNearByUsers(TaskVO task);
 }

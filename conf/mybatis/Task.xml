@@ -14,9 +14,41 @@
 		<result property="device_id" column="device_id" />
 	</resultMap>
 	
-	<select id="tasksByUserId" parameterType="int" resultType="com.aztask.vo.TaskVO">
+	<select id="newTasks" resultType="com.aztask.vo.TaskVO">
+		<!-- This query won't be returning entire list of tasks from table
+			 in fact, there would be a condition to decide number of new tasks to be returned
+			 like, all the tasks created in last 5 mins.  -->
+		select * from t_task limit 10
+	</select>
+
+
+	<select id="featuredTasks" resultType="com.aztask.vo.TaskVO">
+		<!-- This query won't be returning entire list of tasks from table
+			 in fact, there would be a condition to decide number of new tasks to be returned
+			 like, all the tasks created in last 5 mins.  -->
+		select * from t_task limit 10
+	</select>
+
+   <select id="nearByTasks" resultType="com.aztask.vo.TaskVO">
+	
+	<![CDATA[ SELECT task_id,task_desc,(6371 * acos (cos ( radians(#{latitude}) ) * cos( radians(tul.latitude ) ) * 
+	 		cos( radians(tul.longitude ) - radians(#{longitude}) )+sin ( radians(#{latitude}) ) * sin( radians(tul.latitude) ))) AS distance
+	  		FROM t_task tul having distance < 1 order by distance  ]]>
+	  		
+	</select>
+
+	<select id="allTasksOfUser" parameterType="int" resultType="com.aztask.vo.TaskVO">
 		select * from t_task where user_id=#{id}
 	</select>
+
+	<select id="pendingTasksOfUser" parameterType="int" resultType="com.aztask.vo.TaskVO">
+		select * from t_task where user_id=#{id}
+	</select>
+
+	<select id="acceptedTasksOfUser" parameterType="int" resultType="com.aztask.vo.TaskVO">
+		select * from t_task where user_id=#{id}
+	</select>
+
 
 	<select id="getTaskById" resultType="com.aztask.vo.TaskVO">
 		select * from t_task where task_id = #{id}

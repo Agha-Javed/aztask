@@ -18,8 +18,12 @@
   
   <logger name="play" level="INFO" />
   <logger name="application" level="INFO" />
+  <logger name="java.sql" level="DEBUG">
+   <appender-ref ref="STDOUT"/> 
+   <!-- see the appender named OUT defined above -->
+  </logger>
   
-  <root level="INFO">
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
     <appender-ref ref="FILE" />
   </root>
