@@ -16,14 +16,16 @@
     
   </appender>
   
-  <logger name="play" level="INFO" />
-  <logger name="application" level="INFO" />
-  <logger name="java.sql" level="DEBUG">
-   <appender-ref ref="STDOUT"/> 
-   <!-- see the appender named OUT defined above -->
-  </logger>
+<!--   <logger name="play" level="INFO" /> -->
+<!--   <logger name="application" level="INFO" /> -->
   
-  <root level="DEBUG">
+  <!-- to print out sql statments, just uncomment these lines  -->
+<!--   <logger name="java.sql" level="DEBUG"> -->
+<!--    <appender-ref ref="STDOUT"/>  -->
+<!--   </logger> -->
+  
+  <!--need to change to debug to print detial informaion -->
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
     <appender-ref ref="FILE" />
   </root>

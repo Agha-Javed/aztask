@@ -8,19 +8,20 @@ GET     /                           	 com.aztask.controllers.Application.index()
 
 # UserController is going to handle all user related activities
 POST	/user/register					 com.aztask.controllers.UserController.registerUser()
-POST	/user/:id/is_registered			 com.aztask.controllers.UserController.isUserRegistered(id: Int)
+POST	/user/update					 com.aztask.controllers.UserController.updateUserProfile()
+GET	/user/is_registered/:deviceId		 com.aztask.controllers.UserController.isUserRegistered(deviceId: String)
 
 
 # TaskController is going to handle all user related activities
 GET     /tasks/list/new                  com.aztask.controllers.TaskController.newTasks()
 GET     /tasks/list/featured             com.aztask.controllers.TaskController.featuredTasks()
-GET     /tasks/list/nearby               com.aztask.controllers.TaskController.nearbyTasks()
+POST    /tasks/list/nearby               com.aztask.controllers.TaskController.nearbyTasks()
 GET     /tasks/task/:id                  com.aztask.controllers.TaskController.taskById(id: Int)
 GET		/user/:id/acceptTask/:taskId	 com.aztask.controllers.TaskController.acceptTask(id: Int, taskId: Int)
 GET		/user/:id/tasks					 com.aztask.controllers.TaskController.userTasksById(id: Int)
 
+GET		/user/:userId/task/:taskId		 com.aztask.controllers.TaskController.deleteTask(userId: Int, taskId: Int)
 POST	/user/:id/createTask			 com.aztask.controllers.TaskController.createTask(id: Int)
-POST	/user/deleteTask				 com.aztask.controllers.TaskController.deleteTask()
 POST	/user/updateTask				 com.aztask.controllers.TaskController.updateTask()
 
 # Map static resources from the /public folder to the /assets URL path
