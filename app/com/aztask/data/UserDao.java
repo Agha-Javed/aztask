@@ -3,8 +3,8 @@ package com.aztask.data;
 import java.util.List;
 
 import com.aztask.vo.Login;
-import com.aztask.vo.TaskVO;
-import com.aztask.vo.UserVO;
+import com.aztask.vo.Task;
+import com.aztask.vo.User;
 
 /**
  * @author Javed
@@ -12,10 +12,10 @@ import com.aztask.vo.UserVO;
  */
 public interface UserDao {
 	
-	public boolean registerUser(UserVO userVO);
-	public boolean updateUserProfile(UserVO userVO);
+	public boolean registerUser(User userVO);
+	public boolean updateUserProfile(User userVO);
 	public boolean isUserRegistered(String userDeviceId);
 	public boolean login(Login loginCredentials);
-	public UserVO getUserById(int userId);
-	public List<UserVO> findNearByUsers(TaskVO task);
+	public User getUserById(int userId);
+	public List<User> findNearByUsers(Task task);
 }
