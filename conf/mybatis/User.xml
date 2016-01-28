@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="User">
 
-	<insert id="saveUser" parameterType="com.aztask.vo.UserVO" useGeneratedKeys="true"	keyProperty="id" keyColumn="id">
+	<insert id="saveUser" parameterType="com.aztask.vo.User" useGeneratedKeys="true"	keyProperty="id" keyColumn="id">
 	INSERT INTO t_user
 	(`name`,
 	`contact`,
@@ -12,17 +12,17 @@
 	`skills`,
 	`device_id`)
 	VALUES
-	(#{name},#{contact},#{email},#{skills},#{device_id});
+	(#{name},#{contact},#{email},#{skills},#{deviceId});
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
 			SELECT	LAST_INSERT_ID();
 		</selectKey>
 	</insert>
 
-  <select id="isUserRegistered" resultType="com.aztask.vo.UserVO">
+  <select id="isUserRegistered" resultType="com.aztask.vo.User">
     select * from t_user where device_id = #{device_id}
   </select>
 
-  <select id="getUserById" resultType="com.aztask.vo.UserVO">
+  <select id="getUserById" resultType="com.aztask.vo.User">
     select * from t_user where id = #{id}
   </select>
   
@@ -34,14 +34,14 @@
   </select>
 
 
-  <select id="getRelatedNearbyUsers" resultType="com.aztask.vo.UserVO">
+  <select id="getRelatedNearbyUsers" resultType="com.aztask.vo.User">
 		select * from t_user 
 		 <where>#{longitude}</where>
   </select>
 
  <update id="updateUser">
  
- 	update t_user set name=#{name},contact=#{contact},email=#{email},skills=#{skills} where device_id=#{device_id}	
+ 	update t_user set name=#{name},contact=#{contact},email=#{email},skills=#{skills} where device_id=#{deviceId}	
  
  </update>
   
@@ -53,7 +53,7 @@
   	select count(*) from t_user
   </select>
 
-  <select id="selectNearbyUsers" parameterType="java.util.Map" resultType="com.aztask.vo.UserVO">
+  <select id="selectNearbyUsers" parameterType="java.util.Map" resultType="com.aztask.vo.User">
   	SELECT * FROM t_user WHERE device_id in ${deviceIds} and (${skills})
   </select>
   
