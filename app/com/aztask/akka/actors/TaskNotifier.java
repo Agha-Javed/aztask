@@ -2,12 +2,10 @@ package com.aztask.akka.actors;
 
 import java.util.Collections;
 import java.util.List;
-
-import com.aztask.business.Task;
+import com.aztask.business.TaskBO;
 import com.aztask.service.UserService;
-import com.aztask.vo.ActorReply;
-import com.aztask.vo.TaskVO;
-import com.aztask.vo.UserVO;
+import com.aztask.vo.Task;
+import com.aztask.vo.User;
 
 import play.Logger.ALogger;
 import akka.actor.UntypedActor;
@@ -21,17 +19,14 @@ public class TaskNotifier extends UntypedActor {
 	
 	@Override
 	public void onReceive(final Object obj){
-			log.info("Notifying all consumers.");
-			ActorReply actorReply = (ActorReply) obj;
-			int taskId = actorReply.getTaskId();
-			log.info("Retrieving task from DB:" + taskId);
-			TaskVO taskVO = new Task().getTaskById(taskId);
+			Task taskVO =(Task)obj;
 			log.info("Task VO:" + taskVO);
-			List<UserVO> nearbyUsers = getNearbyUsers(taskVO);
+			List<User> nearbyUsers = getNearbyUsers(taskVO);
 			log.info("Nearby Users:"+nearbyUsers);
+			new TaskBO().assignTask(taskVO, nearbyUsers);
 	}
 
-	public List<UserVO> getNearbyUsers(TaskVO taskVO){
+	public List<User> getNearbyUsers(Task taskVO){
 		if(taskVO!=null){
 			return UserService.getInstance().nearByUsers(taskVO);
 			
