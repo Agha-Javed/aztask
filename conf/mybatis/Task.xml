@@ -14,7 +14,7 @@
 		<result property="device_id" column="device_id" />
 	</resultMap>
 
-	<resultMap id="assignedTaskResultMap" type="com.aztask.vo.AssignedTaskVO">
+	<resultMap id="assignedTaskResultMap" type="com.aztask.vo.AssignedTask">
 		<id property="id" column="id" />
 		<result property="assignorId" column="task_assignor_id" />
 		<result property="assigneeId" column="task_assignee_id" />
@@ -90,7 +90,7 @@
 	</delete>
 	
 
-	<insert id="assignTask" parameterType="com.aztask.vo.AssignedTaskVO" useGeneratedKeys="true"
+	<insert id="assignTask" parameterType="com.aztask.vo.AssignedTask" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		INSERT INTO t_assigned_tasks
 		(`task_assignor_id`,
@@ -106,7 +106,7 @@
 	</insert>
 
 
-	<select id="getAssignedTask" resultType="com.aztask.vo.AssignedTaskVO">
+	<select id="getAssignedTask" resultType="com.aztask.vo.AssignedTask">
 		select * from t_assigned_tasks where task_id=${task_id} and task_assignee_id=${task_assignee_id};
 	</select>
 
