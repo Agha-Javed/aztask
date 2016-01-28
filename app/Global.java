@@ -1,8 +1,7 @@
 
 
-import akka.actor.ActorRef;
 import akka.actor.Props;
-import com.aztask.actors.TaskSupervisor;
+import com.aztask.akka.actors.TaskSupervisor;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -17,8 +16,7 @@ public class Global extends GlobalSettings {
 	public void onStart(Application arg0) {
 		super.onStart(arg0);
 		logger.info("Application Started.");
-    	ActorRef actorRef=Akka.system().actorOf(Props.create(TaskSupervisor.class),"ParentActor");
-    	actorRef.tell(true, null);
+    	Akka.system().actorOf(Props.create(TaskSupervisor.class),"ParentActor");
 	}
 	
 }
