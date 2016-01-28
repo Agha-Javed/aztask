@@ -3,7 +3,6 @@ package com.aztask.vo;
 public class AssignedTask {
 
 	private int id;
-	
 	private int assignorId;
 	private int assigneeId;
 	private int taskId;

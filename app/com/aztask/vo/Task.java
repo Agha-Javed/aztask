@@ -7,16 +7,13 @@ public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int task_id;
-
-	private String task_desc;
-	private String task_categories;
 	private int user_id;
-	
+	private String task_desc;
 	private String latitude;
 	private String longitude;
 	private String device_id;
 	private String task_time;
-
+	private String task_categories;
 
 	public Task() {
 
