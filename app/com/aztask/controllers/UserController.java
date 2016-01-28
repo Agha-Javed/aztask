@@ -3,7 +3,7 @@ package com.aztask.controllers;
 import com.aztask.service.UserService;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
-import com.aztask.vo.UserVO;
+import com.aztask.vo.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,10 +26,11 @@ public class UserController extends Controller{
 		JsonNode userNode = request().body().asJson();
 
 		if (userNode.size() > 0) {
+			logger.info(userNode.toString());
 			ObjectMapper mapper = new ObjectMapper();
-			UserVO user;
+			User user;
 			try {
-				user = mapper.treeToValue(userNode, UserVO.class);
+				user = mapper.treeToValue(userNode, User.class);
 				logger.info("Registering User." + user);
 				return ok(Json.toJson(UserService.getInstance().registerUser(user)));
 			} catch (JsonProcessingException e) {
@@ -53,9 +54,9 @@ public class UserController extends Controller{
 
 		if (userNode.size() > 0) {
 			ObjectMapper mapper = new ObjectMapper();
-			UserVO user;
+			User user;
 			try {
-				user = mapper.treeToValue(userNode, UserVO.class);
+				user = mapper.treeToValue(userNode, User.class);
 				logger.info("Updating User Profile." + user);
 				return ok(Json.toJson(UserService.getInstance().updateUserProfile(user)));
 			} catch (JsonProcessingException e) {
@@ -100,11 +101,11 @@ public class UserController extends Controller{
 	 * @throws Exception
 	 */
 	@BodyParser.Of(BodyParser.Json.class)
-	public static Result isUserRegistered(int userId) throws Exception {
-		logger.info("Checking if user exists.");
-		JsonNode requestNode = request().body().asJson();
-		if (requestNode.size() > 0) {
-			String deviceId = requestNode.get("device-id").textValue();
+	public static Result isUserRegistered(String deviceId) throws Exception {
+		logger.info("Checking if device "+deviceId+" exists.");
+
+		if (deviceId!=null && deviceId.length()>0) {
+			//String deviceId = requestNode.get("deviceId").textValue();
 			return ok(Json.toJson(UserService.getInstance().isUserRegistered(deviceId)));
 		}
 		return ok(Json.toJson(new Reply("400", "Device is not registered.")));

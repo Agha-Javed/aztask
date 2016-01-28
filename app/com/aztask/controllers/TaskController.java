@@ -1,10 +1,9 @@
 package com.aztask.controllers;
 
-import com.aztask.business.Task;
+import com.aztask.business.TaskBO;
 import com.aztask.service.TaskService;
-import com.aztask.vo.AcceptedTaskVO;
 import com.aztask.vo.Reply;
-import com.aztask.vo.TaskVO;
+import com.aztask.vo.Task;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import play.Logger.ALogger;
@@ -35,7 +34,7 @@ public class TaskController extends Controller {
 		if (taskNode.size() > 0) {
 			TaskService taskService = TaskService.getInstance();
 			ObjectMapper mapper = new ObjectMapper();
-			TaskVO task = mapper.treeToValue(taskNode, TaskVO.class);
+			Task task = mapper.treeToValue(taskNode, Task.class);
 			task.setUser_id(userId);
 			logger.info("Saving Task Object." + task);
 			return ok(Json.toJson(taskService.createTask(task)));
@@ -48,8 +47,9 @@ public class TaskController extends Controller {
 		return ok(Json.toJson(new Reply("200", "Task Updated")));
 	}
 
-	public static Result deleteTask() {
-		return ok(Json.toJson(new Reply("200", "Task Deleted")));
+	public static Result deleteTask(int userId,int taskId) {
+		logger.info("User Id." + userId+" and TaskId "+taskId);
+		return ok(Json.toJson(TaskService.getInstance().deleteTask(userId, taskId)));
 	}
 
 	public static Result userTasksById(int userId) {
@@ -60,12 +60,12 @@ public class TaskController extends Controller {
 	public static Result acceptTask(int userId, int taskId) throws Exception {
 		logger.info("Accepting task.");
 		logger.info("User " + userId + " is accepting task:" + taskId);
-		return ok(Json.toJson(TaskService.getInstance().acceptTask(new AcceptedTaskVO(userId, taskId))));
+		return ok(Json.toJson(TaskService.getInstance().acceptTask(userId, taskId)));
 	}
 
 	public static Result taskById(int taskId) throws Exception {
 		logger.info("info Testing Logging.");
-		return ok(Json.toJson(new Task().getTaskById(taskId)));
+		return ok(Json.toJson(new TaskBO().getTaskById(taskId)));
 	}
 
 	public static Result featuredTasks() throws Exception {
@@ -74,10 +74,31 @@ public class TaskController extends Controller {
 
 	}
 
+	@BodyParser.Of(BodyParser.Json.class)
 	public static Result nearbyTasks() throws Exception {
+		logger.info("TaskController.tasksByCateogories.");
+		JsonNode taskNode = request().body().asJson();
+		if(taskNode.size()>0){
+			String latitude=taskNode.get("latitude").asText();
+			String longitude=taskNode.get("longitude").asText();
 
-		return newTasks();
+			logger.info("Latitude."+latitude);
+			logger.info("longitude."+longitude);
 
+			return ok(Json.toJson(TaskService.getInstance().nearByTasks(latitude,longitude)));
+		}
+		return ok(Json.toJson(new Reply("200", "You task is being processed.")));
+	}
+	
+	public static Result tasksByCateogories() throws Exception{
+		logger.info("TaskController.tasksByCateogories.");
+		JsonNode taskNode = request().body().asJson();
+		if(taskNode.size()>0){
+			String categories=taskNode.findValue("task_categories").asText();
+			logger.info("TaskController.tasksByCateogories."+categories);
+			return ok(Json.toJson(TaskService.getInstance().tasksByCategories(categories)));
+		}
+		return ok(Json.toJson(new Reply("200", "You task is being processed.")));
 	}
 
 }
