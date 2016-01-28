@@ -3,11 +3,11 @@ package com.aztask.service;
 
 import java.util.List;
 
-import com.aztask.business.User;
+import com.aztask.business.UserBO;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
-import com.aztask.vo.TaskVO;
-import com.aztask.vo.UserVO;
+import com.aztask.vo.Task;
+import com.aztask.vo.User;
 
 import play.Logger.ALogger;
 
@@ -18,8 +18,8 @@ public class UserService {
 	private static UserService userService;
 
 	
-	public Reply registerUser(UserVO user){
-    	return new User().registerUser(user);
+	public Reply registerUser(User user){
+    	return new UserBO().registerUser(user);
 
 	}
 
@@ -28,18 +28,18 @@ public class UserService {
 	}
 
 	//TODO I have to update this method
-	public Reply updateUserProfile(UserVO user){
-    	return new User().registerUser(user);
+	public Reply updateUserProfile(User user){
+    	return new UserBO().updateUserProfile(user);
 	}
 
 	
 	public Reply isUserRegistered(String deviceId){
-		return new User().isUserRegistered(deviceId);
+		return new UserBO().isUserRegistered(deviceId);
 	}
 	
 	
-	public List<UserVO> nearByUsers(TaskVO taskVO){
-		return new User().nearByUsers(taskVO);
+	public List<User> nearByUsers(Task taskVO){
+		return new UserBO().nearByUsers(taskVO);
 	}
 	
 	

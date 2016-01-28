@@ -1,16 +1,12 @@
 package com.aztask.service;
 
 import java.util.List;
-
 import play.Logger.ALogger;
 import play.libs.Akka;
 import akka.actor.ActorSelection;
-
-import com.aztask.business.Task;
-import com.aztask.vo.AcceptedTaskVO;
-import com.aztask.vo.NearByDevice;
+import com.aztask.business.TaskBO;
 import com.aztask.vo.Reply;
-import com.aztask.vo.TaskVO;
+import com.aztask.vo.Task;
 
 public class TaskService {
 
@@ -24,47 +20,58 @@ public class TaskService {
 	 * This method will return all tasks regardless of users
 	 * @return
 	 */
-	public List<TaskVO> newTasks(){
-		return new Task().newTasks();
+	public List<Task> newTasks(){
+		return new TaskBO().newTasks();
 	}
 	
-	public List<TaskVO> featuredTasks(){
-		return new Task().featuredTasks();
+	public List<Task> featuredTasks(){
+		return new TaskBO().featuredTasks();
 	}
 	
-	public List<TaskVO> nearByTasks(NearByDevice nearByLocation){
-		return new Task().nearByTasks(nearByLocation);
+	public List<Task> nearByTasks(String latitude, String longitude){
+		return new TaskBO().nearByTasks(latitude,longitude);
 	}
 	
 	
-	public List<TaskVO> allTasksOfUser(int userId){
-		return new Task().allTasksOfUser(userId);
+	public List<Task> allTasksOfUser(int userId){
+		return new TaskBO().allTasksOfUser(userId);
 	}
 	
-	public List<TaskVO> pendingTasksOfUser(int userId){
-		return new Task().pendingTasksOfUser(userId);
+	public List<Task> pendingTasksOfUser(int userId){
+		return new TaskBO().pendingTasksOfUser(userId);
 	}
 	
-	public List<TaskVO> acceptedTasksOfUser(int userId){
-		return new Task().acceptedTasksOfUser(userId);
+	public List<Task> tasksAcceptedByUser(int userId){
+		return new TaskBO().tasksAcceptedByUser(userId);
 	}
 	
-	public Reply createTask(TaskVO task){
+	public List<Task> tasksByCategories(String categories){
+		return new TaskBO().tasksByCategories(categories);
+	}
+	
+	public Reply createTask(Task task){
 		task_service_log.info("TaskService: creating task.");
-    	ActorSelection parentActor = Akka.system().actorSelection("/user/ParentActor");
-    	parentActor.tell(task, parentActor.anchor());
+    	int taskId=new TaskBO().createTask(task);
+    	if(taskId>0){
+        	ActorSelection parentActor = Akka.system().actorSelection("/user/ParentActor");
+        	parentActor.tell(task, parentActor.anchor());
+    	}
     	return new Reply("200", "Success");
 	}
 	
 	public Reply deleteTask(int userId,int taskId){
-		return null;
+		boolean taskDeleted=false;
+		if(userId>0 && taskId>0){
+			task_service_log.info("TaskService: creating task.");
+	    	taskDeleted=new TaskBO().deleteTask(userId, taskId);
+		}
+		
+		return (taskDeleted) ? new Reply("200", "Success") : new Reply("204", "Failed") ;
 	}
 	
-	public Reply acceptTask(AcceptedTaskVO acceptedTaskVO){
-		task_service_log.info("Accepting task"+acceptedTaskVO);
-    	ActorSelection parentActor = Akka.system().actorSelection("/user/ParentActor");
-    	parentActor.tell(acceptedTaskVO, parentActor.anchor());
-    	return new Reply("200", "Success");
+	public Reply acceptTask(int taskAcceptedBy , int taskId){
+		task_service_log.info("Accepting task :"+taskId);
+    	return (new TaskBO().acceptTask(taskAcceptedBy, taskId)) ? new Reply("200", "Success") : new Reply("404", "Failed") ;
 	}
 
 	synchronized public static TaskService getInstance(){
