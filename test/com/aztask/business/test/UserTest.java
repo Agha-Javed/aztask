@@ -5,12 +5,12 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 import play.test.Helpers;
-import com.aztask.business.Task;
-import com.aztask.business.User;
+import com.aztask.business.TaskBO;
+import com.aztask.business.UserBO;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
-import com.aztask.vo.TaskVO;
-import com.aztask.vo.UserVO;
+import com.aztask.vo.Task;
+import com.aztask.vo.User;
 
 public class UserTest {
 
@@ -24,8 +24,8 @@ public class UserTest {
 	public void registerUser() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				UserVO userVO=new UserVO("Hussain", "0166133886", "hussain@gmail.com", "programming","uuuttt12345");
-				Reply reply = new User().registerUser(userVO);
+				User userVO=new User("Hussain", "0166133886", "hussain@gmail.com", "programming","uuuttt12345");
+				Reply reply = new UserBO().registerUser(userVO);
 				System.out.println("Task create:" + reply);
 			}
 		});
@@ -36,7 +36,7 @@ public class UserTest {
 	public void isUserRegisterd() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				Reply reply = new User().isUserRegistered("abcdefg12345");
+				Reply reply = new UserBO().isUserRegistered("abcdefg12345");
 				System.out.println("User exists :" + reply.getMessage());
 			}
 		});
@@ -48,9 +48,9 @@ public class UserTest {
 	public void findNearByUsers() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				User user=new User();
-				TaskVO taskVO=new Task().getTaskById(19);
-				List<UserVO> nearbyUsers=user.nearByUsers(taskVO);
+				UserBO user=new UserBO();
+				Task taskVO=new TaskBO().getTaskById(19);
+				List<User> nearbyUsers=user.nearByUsers(taskVO);
 				System.out.println("User exists :" + nearbyUsers.size());
 			}
 		});
@@ -63,8 +63,8 @@ public class UserTest {
 	public void updateProfile() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				UserVO userVO=new UserVO("Hussain", "0166133896", "hussain_test@gmail.com", "programming;singing","uuuttt12345");
-				Reply reply = new User().updateUserProfile(userVO);
+				User userVO=new User("Hussain", "0166133896", "hussain_test@gmail.com", "programming;singing","uuuttt12345");
+				Reply reply = new UserBO().updateUserProfile(userVO);
 				System.out.println("Profile Updated create:" + reply.getMessage());
 			}
 		});
@@ -76,7 +76,7 @@ public class UserTest {
 	public void login() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				User user=new User();
+				UserBO user=new UserBO();
 				Reply reply=user.login(new Login("hussain_test@gmail.com", "", "test", "uuuttt12345"));
 				System.out.println("User exists :" + reply.getMessage());
 			}
