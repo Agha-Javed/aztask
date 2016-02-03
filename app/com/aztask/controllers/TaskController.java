@@ -27,7 +27,7 @@ public class TaskController extends Controller {
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result createTask(int userId) throws Exception {
 
-		logger.info("Creating task for user ::" + userId);
+		logger.info("TaskController.createTask() start.");
 
 		JsonNode taskNode = request().body().asJson();
 
@@ -39,6 +39,8 @@ public class TaskController extends Controller {
 			logger.info("Saving Task Object." + task);
 			return ok(Json.toJson(taskService.createTask(task)));
 		}
+
+		logger.info("TaskController.createTask() end.");
 
 		return ok(Json.toJson(new Reply("200", "You task is being processed.")));
 	}

@@ -17,6 +17,7 @@ public class TaskBO {
 	public static ALogger Logger=play.Logger.of(TaskBO.class);
 	
 	public int createTask(Task task) {
+		Logger.info("TaskBO.createTask.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		task.setTask_time(sdf.format(new Date(System.currentTimeMillis())));
@@ -25,10 +26,12 @@ public class TaskBO {
 	}
 
 	public boolean deleteTask(int userId,int taskId){
+		Logger.info("TaskBO.deleteTask.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		return taskDao.deleteTask(userId,taskId);
 	}
 	public List<Task> newTasks() {
+		Logger.info("TaskBO.newTasks.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		try {
 			return taskDao.newTasks();
@@ -39,22 +42,26 @@ public class TaskBO {
 	}
 
 	public List<Task> featuredTasks() {
+		Logger.info("TaskBO.featuredTasks.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		return taskDao.featuredTasks();
 
 	}
 
 	public List<Task> nearByTasks(String latitude, String longitude) {
+		Logger.info("TaskBO.nearByTasks.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		return taskDao.nearByTasks(latitude,longitude);
 	}
 
 	public Task getTaskById(int taskId) {
+		Logger.info("TaskBO.getTaskById.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		return taskDao.getTaskById(taskId);
 	}
 
 	public List<Task> allTasksOfUser(int userId) {
+		Logger.info("TaskBO.allTasksOfUser.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
 		return taskDao.getTasksByUser(userId);
 	}
