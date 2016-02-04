@@ -45,6 +45,9 @@ public class TaskController extends Controller {
 		return ok(Json.toJson(new Reply("200", "You task is being processed.")));
 	}
 
+	public static Result test() {
+		return ok(Json.toJson(new Reply("200", "Its working fine.")));
+	}
 	public static Result updateTask() {
 		return ok(Json.toJson(new Reply("200", "Task Updated")));
 	}
