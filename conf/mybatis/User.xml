@@ -6,11 +6,11 @@
 
 	<insert id="saveUser" parameterType="com.aztask.vo.User" useGeneratedKeys="true"	keyProperty="id" keyColumn="id">
 	INSERT INTO t_user
-	(`name`,
-	`contact`,
-	`email`,
-	`skills`,
-	`device_id`)
+	(name,
+	contact,
+	email,
+	skills,
+	device_id)
 	VALUES
 	(#{name},#{contact},#{email},#{skills},#{deviceId});
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
