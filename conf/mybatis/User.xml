@@ -7,7 +7,7 @@
 	<insert id="saveUser" parameterType="com.aztask.vo.User" useGeneratedKeys="true"	keyProperty="id" keyColumn="id">
 	INSERT INTO t_user
 	(name,
-	contact,
+	phone,
 	email,
 	skills,
 	device_id)
