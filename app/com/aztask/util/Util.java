@@ -7,12 +7,13 @@ public class Util {
 	
 	
 	public static String getWhereCluase(List<NearByDevice> nearByUsers){
-		StringBuffer whereCluase=new StringBuffer("(");
+		StringBuffer whereCluase=new StringBuffer("");
 		for(NearByDevice nearByUser: nearByUsers){
 			whereCluase.append("'"+nearByUser.getDevice_id()+"',");
 		}
+		if(whereCluase.length()>0)
 		whereCluase.deleteCharAt(whereCluase.length()-1);
-		whereCluase.append(")");
+		
 		return whereCluase.toString();
 	}
 	

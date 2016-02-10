@@ -25,10 +25,17 @@
   
   <select id="getNearbyDevices" resultType="com.aztask.vo.NearByDevice" >
 
-	<![CDATA[ SELECT device_id, (6371 * acos (cos ( radians(#{latitude}) ) * cos( radians(tul.latitude ) ) * 
-	 		cos( radians(tul.longitude ) - radians(#{longitude}) )+sin ( radians(#{latitude}) ) * sin( radians(tul.latitude) ))) AS distance
-	  		FROM t_user_loc tul having distance < 3 order by distance  ]]>
+	<![CDATA[SELECT * FROM ( SELECT device_id, (6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos( radians(tul.latitude ) ) * 
+	 		cos( radians(tul.longitude ) - radians(cast(#{longitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(tul.latitude) ))) AS distance
+	  		FROM t_user_loc tul) as t   where distance < 3 order by distance  ]]>
   </select>
+
+<!--   <select id="getNearbyDevices" resultType="com.aztask.vo.NearByDevice" > -->
+
+<!-- 	<![CDATA[ SELECT device_id, (6371 * acos (cos ( radians(#{latitude}) ) * cos( radians(tul.latitude ) ) *  -->
+<!-- 	 		cos( radians(tul.longitude ) - radians(#{longitude}) )+sin ( radians(#{latitude}) ) * sin( radians(tul.latitude) ))) AS distance -->
+<!-- 	  		FROM t_user_loc tul having distance < 3 order by distance  ]]> -->
+<!--   </select> -->
 
 
   <select id="getRelatedNearbyUsers" resultType="com.aztask.vo.User">
@@ -51,7 +58,7 @@
   </select>
 
   <select id="selectNearbyUsers" parameterType="java.util.Map" resultType="com.aztask.vo.User">
-  	SELECT * FROM t_user WHERE device_id in ${deviceIds} and (${skills})
+  	SELECT * FROM t_user WHERE device_id in (''${deviceIds}) and (${skills})
   </select>
   
   

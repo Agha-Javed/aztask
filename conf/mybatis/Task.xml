@@ -39,9 +39,9 @@
 
    <select id="nearByTasks" resultType="com.aztask.vo.Task">
 	
-	<![CDATA[ SELECT task_id,task_desc,(6371 * acos (cos ( radians(${latitude}) ) * cos( radians(tul.latitude ) ) * 
-	 		cos( radians(tul.longitude ) - radians(${longitude}) )+sin ( radians(${latitude}) ) * sin( radians(tul.latitude) ))) AS distance
-	  		FROM t_task tul having distance < 1 order by distance  ]]>
+	<![CDATA[ SELECT * FROM ( SELECT task_id,task_desc,(6371 * acos (cos ( RADIANS(cast(${latitude} as double precision)) ) * cos( RADIANS(tul.latitude ) ) * 
+	 		cos( RADIANS(tul.longitude ) - RADIANS(cast(${latitude} as double precision))) )+sin ( RADIANS(cast(${latitude} as double precision))) ) * sin( RADIANS(tul.latitude) ))) AS distance
+	  		FROM t_task tul ) as t where distance < 1 order by distance  ]]>
 	  		
 	</select>
 
@@ -70,19 +70,15 @@
 	<insert id="saveTask" parameterType="com.aztask.vo.Task" useGeneratedKeys="true"
 		keyProperty="task_id" keyColumn="task_id">
 		INSERT INTO t_task
-		(`task_desc`,
-		`task_categories`,
-		`user_id`,
-		`latitude`,
-		`longitude`,
-		`device_id`,
-		`task_time`)
+		(task_desc,
+		task_categories,
+		user_id,
+		latitude,
+		longitude,
+		device_id,
+		task_time)
 		VALUES
 		(#{task_desc},#{task_categories},#{user_id},#{latitude},#{longitude},#{device_id},#{task_time});
-		<selectKey keyProperty="task_id" resultType="int" order="AFTER">
-			SELECT
-			LAST_INSERT_ID();
-		</selectKey>
 	</insert>
 	
 	<delete id="deleteTask">
@@ -93,16 +89,12 @@
 	<insert id="assignTask" parameterType="com.aztask.vo.AssignedTask" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		INSERT INTO t_assigned_tasks
-		(`task_assignor_id`,
-		`task_id`,
-		`task_assignee_id`,
-		`task_status`)
+		(task_assignor_id,
+		task_id,
+		task_assignee_id,
+		task_status)
 		VALUES
 		(#{assignorId},#{taskId},#{assigneeId},#{taskStatus});
-		<selectKey keyProperty="id" resultType="int" order="AFTER">
-			SELECT
-			LAST_INSERT_ID();
-		</selectKey>
 	</insert>
 
 
