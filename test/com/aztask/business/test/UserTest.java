@@ -24,7 +24,8 @@ public class UserTest {
 	public void registerUser() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				User userVO=new User("Hussain", "0166133886", "hussain@gmail.com", "programming","uuuttt12345");
+				
+				User userVO=new User();//new User("Hussain", "0166133886", "hussain@gmail.com", "programming","uuuttt12345");
 				Reply reply = new UserBO().registerUser(userVO);
 				System.out.println("Task create:" + reply);
 			}
@@ -63,7 +64,7 @@ public class UserTest {
 	public void updateProfile() {
 		running(Helpers.fakeApplication(), new Runnable() {
 			public void run() {
-				User userVO=new User("Hussain", "0166133896", "hussain_test@gmail.com", "programming;singing","uuuttt12345");
+				User userVO=new User();//new User("Hussain", "0166133896", "hussain_test@gmail.com", "programming;singing","uuuttt12345");
 				Reply reply = new UserBO().updateUserProfile(userVO);
 				System.out.println("Profile Updated create:" + reply.getMessage());
 			}
