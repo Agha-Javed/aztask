@@ -29,7 +29,6 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		List<DeviceInfo> nearByDevices=session.selectList("User.getNearbyDevices", task);//''selectList("Task.getTaskById", userId);
 		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: number of nearby devices "+nearByDevices.size());
-		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: number of nearby devices "+nearByDevices.get(0));
 		String deviceIds=Util.getWhereCluase(nearByDevices);
 		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: near by devices "+deviceIds);
 		String skills=Util.getLikeClause("skills",task.getTask_categories());
