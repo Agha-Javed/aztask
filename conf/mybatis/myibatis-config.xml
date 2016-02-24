@@ -8,14 +8,12 @@
     <transactionManager type="JDBC"/>
     <dataSource type="POOLED">
      <property name="driver" value="org.postgresql.Driver"/>
-
      <property name="url" value="jdbc:postgresql://ec2-107-21-218-93.compute-1.amazonaws.com:5432/da5856mpehrc9s"/>
      <property name="username" value="feunoscaipkohm"/>
      <property name="password" value="LMnRlIWiLDCVVTd_weMx87RDwk"/>
 <!--      <property name="url" value="jdbc:postgresql://localhost:1234/postgres"/> -->
 <!--      <property name="username" value="postgres"/> -->
 <!--      <property name="password" value="root"/> -->
-
     </dataSource>
   </environment>  
   </environments>
@@ -23,5 +21,6 @@
   <mappers>
     <mapper resource="mybatis/User.xml"/>
     <mapper resource="mybatis/Task.xml"/>
+    <mapper resource="mybatis/Device.xml"/>
   </mappers>
 </configuration>
