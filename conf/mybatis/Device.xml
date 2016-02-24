@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Device">
+
+	<insert id="insertLocation" parameterType="com.aztask.vo.User">
+	INSERT INTO t_user_loc
+	(device_id,latitude,longitude)
+	VALUES
+	(#{deviceInfo.deviceId},#{deviceInfo.latitude},#{deviceInfo.longitude});
+	</insert>
+
+ <update id="updateLocation" parameterType="com.aztask.vo.DeviceInfo">
+ 
+  	update t_user_loc set latitude=#{latitude},longitude=#{longitude} where device_id=#{deviceId};	
+  
+ </update>
+  
+</mapper>
+
