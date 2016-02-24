@@ -25,14 +25,14 @@ public class UserBO {
 	}
 	
 	public Reply updateUserProfile(User user){
-		if(user==null || user.getDeviceId()==null){
-			return new Reply("400","Invalid User Id.");
-		}
-
+//		if(user==null || user.getDeviceId()==null){
+//			return new Reply("400","Invalid User Id.");
+//		}
+//
 		UserDao userDao=new UserDaoImpl_MyBatis();
-		if(!userDao.isUserRegistered(user.getDeviceId())){
-			return new Reply("400","User doesn't exist.");
-		}
+//		if(!userDao.isUserRegistered(user.getDeviceId())){
+//			return new Reply("400","User doesn't exist.");
+//		}
 		
 		return (userDao.updateUserProfile(user)) ? new Reply("200","User Profile Updated.") :new Reply("401","Error in updating profile.");
 	}

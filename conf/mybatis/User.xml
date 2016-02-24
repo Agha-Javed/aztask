@@ -12,7 +12,7 @@
 	skills,
 	device_id)
 	VALUES
-	(#{name},#{contact},#{email},#{skills},#{deviceId});
+	(#{name},#{contact},#{email},#{skills},#{deviceInfo.deviceId});
 	</insert>
 
   <select id="isUserRegistered" resultType="com.aztask.vo.User">
@@ -23,11 +23,19 @@
     select * from t_user where id = #{id}
   </select>
   
-  <select id="getNearbyDevices" resultType="com.aztask.vo.NearByDevice" >
+  <select id="getNearbyDevices" resultType="com.aztask.vo.DeviceInfo" >
 
-	<![CDATA[SELECT * FROM ( SELECT device_id, (6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos( radians(tul.latitude ) ) * 
-	 		cos( radians(tul.longitude ) - radians(cast(#{longitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(tul.latitude) ))) AS distance
+	<![CDATA[SELECT * FROM ( SELECT device_id as deviceId, (6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos ( radians(cast(tul.latitude as double precision) ) ) * 
+	 		cos( radians(cast(tul.longitude as double precision) ) - radians(cast(${longitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(cast(tul.latitude as double precision)) ))) AS distance
 	  		FROM t_user_loc tul) as t   where distance < 3 order by distance  ]]>
+
+
+<!--     <![CDATA[SELECT * FROM ( SELECT device_id, (6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos ( radians(cast(tul.latitude as double precision) ) ) *  -->
+<!-- 	 		cos( radians(cast(tul.longitude as double precision) ) - radians(cast('-123.085824' as double precision)) )+ -->
+<!-- 	 		sin ( radians(cast('37.376339' as double precision)) ) * sin( radians(cast(tul.latitude as double precision)) ))) AS distance -->
+<!-- 	  		FROM t_user_loc tul) as t   where distance < 3 ]]> -->
+
+
   </select>
 
 <!--   <select id="getNearbyDevices" resultType="com.aztask.vo.NearByDevice" > -->
@@ -58,7 +66,7 @@
   </select>
 
   <select id="selectNearbyUsers" parameterType="java.util.Map" resultType="com.aztask.vo.User">
-  	SELECT * FROM t_user WHERE device_id in (''${deviceIds}) and (${skills})
+  	SELECT * FROM t_user WHERE device_id in (${deviceIds}) and (${skills})
   </select>
   
   

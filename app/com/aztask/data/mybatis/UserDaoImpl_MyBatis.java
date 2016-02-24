@@ -11,7 +11,7 @@ import play.Logger.ALogger;
 import com.aztask.data.UserDao;
 import com.aztask.util.Util;
 import com.aztask.vo.Login;
-import com.aztask.vo.NearByDevice;
+import com.aztask.vo.DeviceInfo;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
 
@@ -27,8 +27,9 @@ public class UserDaoImpl_MyBatis implements UserDao{
 	@Override
 	public List<User> findNearByUsers(Task task) {
 		SqlSession session=MyBatis_SessionFactory.openSession();
-		List<NearByDevice> nearByDevices=session.selectList("User.getNearbyDevices", task);//''selectList("Task.getTaskById", userId);
+		List<DeviceInfo> nearByDevices=session.selectList("User.getNearbyDevices", task);//''selectList("Task.getTaskById", userId);
 		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: number of nearby devices "+nearByDevices.size());
+		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: number of nearby devices "+nearByDevices.get(0));
 		String deviceIds=Util.getWhereCluase(nearByDevices);
 		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: near by devices "+deviceIds);
 		String skills=Util.getLikeClause("skills",task.getTask_categories());
@@ -84,6 +85,8 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		session.insert("User.saveUser", userVO);
 		logger.info("UserDaoImpl_MyBatis - > registerUser:: User saved "+userVO.getId());
+		logger.info("UserDaoImpl_MyBatis - > registerUser:: Saving Location ");
+		session.insert("Device.insertLocation", userVO);
 		session.commit();
 		session.close();
 		return false;

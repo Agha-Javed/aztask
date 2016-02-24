@@ -24,6 +24,8 @@ GET		/user/:userId/task/:taskId		 com.aztask.controllers.TaskController.deleteTa
 POST	/user/:id/createTask			 com.aztask.controllers.TaskController.createTask(id: Int)
 POST	/user/updateTask				 com.aztask.controllers.TaskController.updateTask()
 
+POST	/device/updateLoc				 com.aztask.controllers.DeviceController.updateDeviceLocation()
+
 GET		/tasks/task						 com.aztask.controllers.TaskController.test()
 
 

@@ -1,15 +1,22 @@
 package com.aztask.util;
 
 import java.util.List;
-import com.aztask.vo.NearByDevice;
+
+import play.Logger.ALogger;
+
+import com.aztask.vo.DeviceInfo;
 
 public class Util {
 	
-	
-	public static String getWhereCluase(List<NearByDevice> nearByUsers){
+
+	static ALogger logger=play.Logger.of(Util.class);
+
+	public static String getWhereCluase(List<DeviceInfo> nearByUsers){
+		logger.info("Util.getWhereCluase:: "+nearByUsers);
 		StringBuffer whereCluase=new StringBuffer("");
-		for(NearByDevice nearByUser: nearByUsers){
-			whereCluase.append("'"+nearByUser.getDevice_id()+"',");
+		for(DeviceInfo nearByUser: nearByUsers){
+			logger.info("Nearby User :: "+nearByUser);
+			whereCluase.append("'"+nearByUser.getDeviceId()+"',");
 		}
 		if(whereCluase.length()>0)
 		whereCluase.deleteCharAt(whereCluase.length()-1);
@@ -21,7 +28,7 @@ public class Util {
 		
 		StringBuffer likeCluase=new StringBuffer();
 		for(String taskCategory : categories.split(";")){
-			likeCluase.append(" "+columnName+" like '%"+taskCategory+"%' or");
+			likeCluase.append(" lower("+columnName+") like '%"+taskCategory.toLowerCase()+"%' or");
 		}
 		likeCluase.delete(likeCluase.length()-2, likeCluase.length());
 		return likeCluase.toString();

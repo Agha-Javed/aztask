@@ -46,7 +46,7 @@
 	  		
 	 <![CDATA[ select * from (SELECT task_id,task_desc,(6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos( radians(cast(tul.latitude as double precision) ) ) * 
 	 		cos( radians(cast(tul.longitude as double precision) ) - radians(cast(${latitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(cast(tul.latitude as double precision)) ))) AS distance
-	  		FROM t_task tul) as t where distance < 1 order by distance ]]>
+	  		FROM t_task tul) as t where distance < 3 order by distance ]]>
 	  		
 	</select>
 

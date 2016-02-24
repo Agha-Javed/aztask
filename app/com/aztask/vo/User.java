@@ -17,26 +17,28 @@ public class User implements Serializable{
 	private String contact;
 	private String email;
 	private String skills;
-	private String deviceId;
+	
+	private DeviceInfo deviceInfo;
 
 	public User() {
 
 	}
 
-	public User(String name, String contact, String email, String skills,String device_id) {
+	public User(String name, String contact, String email, String skills,DeviceInfo deviceInfo) {
 		this.name = name;
 		this.contact = contact;
 		this.email = email;
 		this.skills = skills;
-		this.deviceId=device_id;
+		this.deviceInfo=deviceInfo;
 	}
 
 	public User(int id, String name, String contact, String email,
-			String skills,String device_id) {
-		this(name, contact, email, skills,device_id);
+			String skills,DeviceInfo deviceInfo) {
+		this(name, contact, email, skills,deviceInfo);
 		this.id = id;
 	}
 
+	
 	public int getId() {
 		return id;
 	}
@@ -78,15 +80,16 @@ public class User implements Serializable{
 		this.skills = skills;
 	}
 
-	public String getDeviceId() {
-		return deviceId;
+
+	public DeviceInfo getDeviceInfo() {
+		return deviceInfo;
 	}
 
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
+	public void setDeviceInfo(DeviceInfo deviceInfo) {
+		this.deviceInfo = deviceInfo;
 	}
 
-
+	
 	@Override
 	public String toString() {
 		return "UserVO [name=" + name + "]";

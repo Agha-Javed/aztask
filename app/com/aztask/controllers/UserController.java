@@ -1,12 +1,14 @@
 package com.aztask.controllers;
 
 import com.aztask.service.UserService;
+import com.aztask.vo.DeviceInfo;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
 import com.aztask.vo.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import play.Logger;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -32,6 +34,7 @@ public class UserController extends Controller{
 			try {
 				user = mapper.treeToValue(userNode, User.class);
 				logger.info("Registering User." + user);
+				logger.info("Device Info." + user.getDeviceInfo());
 				return ok(Json.toJson(UserService.getInstance().registerUser(user)));
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
