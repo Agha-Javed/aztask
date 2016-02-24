@@ -1,7 +1,6 @@
 package com.aztask.controllers;
 
 import com.aztask.service.UserService;
-import com.aztask.vo.DeviceInfo;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
 import com.aztask.vo.User;
