@@ -91,7 +91,7 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		session.insert("Device.insertLocation", userVO);
 		session.commit();
 		session.close();
-		return false;
+		return true;
 	}
 	
 	@Override
