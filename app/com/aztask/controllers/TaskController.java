@@ -2,10 +2,13 @@ package com.aztask.controllers;
 
 import com.aztask.business.TaskBO;
 import com.aztask.service.TaskService;
+import com.aztask.util.Constants;
+import com.aztask.util.JSONValidationUtil;
 import com.aztask.vo.Reply;
 import com.aztask.vo.Task;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import play.Logger.ALogger;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -32,6 +35,12 @@ public class TaskController extends Controller {
 		JsonNode taskNode = request().body().asJson();
 
 		if (taskNode.size() > 0) {
+			
+			if(!JSONValidationUtil.validate(taskNode.toString(), Constants.JSON_TASK_SCHEMA)){
+				logger.info("Invalid JSON Data.");
+				return ok(Json.toJson(new Reply("401", "Invalid Request Data.")));
+			}
+
 			TaskService taskService = TaskService.getInstance();
 			ObjectMapper mapper = new ObjectMapper();
 			Task task = mapper.treeToValue(taskNode, Task.class);
@@ -84,6 +93,12 @@ public class TaskController extends Controller {
 		logger.info("TaskController.tasksByCateogories.");
 		JsonNode taskNode = request().body().asJson();
 		if(taskNode.size()>0){
+
+			if(!JSONValidationUtil.validate(taskNode.toString(), Constants.JSON_NEARBY_TASKS_SCHEMA)){
+				logger.info("Invalid JSON Data.");
+				return ok(Json.toJson(new Reply("401", "Invalid Request Data.")));
+			}
+			
 			String latitude=taskNode.get("latitude").asText();
 			String longitude=taskNode.get("longitude").asText();
 

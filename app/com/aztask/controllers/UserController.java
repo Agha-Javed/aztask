@@ -1,6 +1,8 @@
 package com.aztask.controllers;
 
 import com.aztask.service.UserService;
+import com.aztask.util.Constants;
+import com.aztask.util.JSONValidationUtil;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
 import com.aztask.vo.User;
@@ -28,6 +30,12 @@ public class UserController extends Controller{
 
 		if (userNode.size() > 0) {
 			logger.info(userNode.toString());
+			
+			if(!JSONValidationUtil.validate(userNode.toString(), Constants.JSON_USER_SCHEMA)){
+				logger.info("Invalid JSON Data.");
+				return ok(Json.toJson(new Reply("401", "Invalid Request Data.")));
+			}
+			
 			ObjectMapper mapper = new ObjectMapper();
 			User user;
 			try {

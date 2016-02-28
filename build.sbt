@@ -12,5 +12,6 @@ libraryDependencies ++= Seq(
   "org.mybatis" % "mybatis" % "3.3.0",
   "com.google.inject" % "guice-parent" % "4.0",
   "org.jsoup" % "jsoup" % "1.8.3",
-  "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+  "com.github.fge" % "json-schema-validator" % "2.2.6"
 )

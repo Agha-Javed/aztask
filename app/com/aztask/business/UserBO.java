@@ -80,5 +80,6 @@ public class UserBO {
 		
 	    return new UserDaoImpl_MyBatis().findNearByUsers(task);
 	}
+	
 
 }

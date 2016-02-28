@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "latitude": {
+      "id": "latitude",
+      "type": "string"
+    },
+    "longitude": {
+      "id": "longitude",
+      "type": "string"
+    }
+  },
+  "required": [
+    "latitude",
+    "longitude"
+  ]
+}

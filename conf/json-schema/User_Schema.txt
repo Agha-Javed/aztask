@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "name": {
+      "id": "name",
+      "type": "string"
+    },
+    "contact": {
+      "id": "contact",
+      "type": "string"
+    },
+    "email": {
+      "id": "email",
+      "type": "string"
+    },
+    "skills": {
+      "id": "skills",
+      "type": "string"
+    },
+    "deviceInfo": {
+      "id": "deviceInfo",
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "id": "deviceId",
+          "type": "string"
+        },
+        "latitude": {
+          "id": "latitude",
+          "type": "string"
+        },
+        "longitude": {
+          "id": "longitude",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "contact",
+    "email",
+    "skills",
+    "deviceInfo"
+  ]
+}
