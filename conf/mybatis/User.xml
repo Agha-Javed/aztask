@@ -68,6 +68,19 @@
   <select id="selectNearbyUsers" parameterType="java.util.Map" resultType="com.aztask.vo.User">
   	SELECT * FROM t_user WHERE device_id in (${deviceIds}) and (${skills})
   </select>
+
+
+  <select id="selectUserByName" parameterType="java.util.Map" resultType="int">
+  	select count(*) from t_user where lower(name)=#{name};
+  </select>
+
+  <select id="selectUserByEmail" parameterType="java.util.Map" resultType="int">
+  	select count(*) from t_user where lower(email)=#{email};
+  </select>
+
+  <select id="selectUserByPhone" parameterType="java.util.Map" resultType="int">
+  	select count(*) from t_user where phone=#{phone};
+  </select>
   
   
 </mapper>

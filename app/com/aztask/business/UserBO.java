@@ -3,6 +3,9 @@ package com.aztask.business;
 import java.sql.SQLException;
 import java.util.List;
 
+import play.Logger.ALogger;
+
+import com.aztask.controllers.TaskController;
 import com.aztask.data.UserDao;
 import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
 import com.aztask.vo.Login;
@@ -12,6 +15,7 @@ import com.aztask.vo.User;
 
 public class UserBO {
 
+	public static ALogger logger = play.Logger.of(UserBO.class);
 	/**
 	 * @param user
 	 * @return Reply
@@ -20,6 +24,13 @@ public class UserBO {
 	 * @throws SQLException 
 	 */
 	public Reply registerUser(User user){
+		
+		Reply reply=validateData(user);
+		if(!reply.getCode().equals("200")){
+			logger.info(reply.getMessage());
+			return reply;
+		}
+		
 		UserDao userDao=new UserDaoImpl_MyBatis();
 		return (userDao.registerUser(user)) ? new Reply("200","User Registerd.") :new Reply("401","Error in Registeration.");
 	}
@@ -79,6 +90,26 @@ public class UserBO {
 	public List<User> nearByUsers(Task task){
 		
 	    return new UserDaoImpl_MyBatis().findNearByUsers(task);
+	}
+	
+	private Reply validateData(User user){
+		
+		UserDao userDaoRef=new UserDaoImpl_MyBatis();
+		if(userDaoRef.findUserByName(user.getName().trim().toLowerCase())>0){
+			return new Reply("400","User with name [ "+user.getName()+" ] already exists.");
+		}
+		
+
+		if(userDaoRef.findUserByEmail(user.getEmail().trim().toLowerCase())>0){
+			return new Reply("400","User with email [ "+user.getEmail()+" ] already exists.");
+		}
+
+		if(userDaoRef.findUserByPhone(user.getContact().trim())>0){
+			return new Reply("400","User with phone [ "+user.getContact()+" ] already exists.");
+		}
+
+		
+		return new Reply("200","Data is valid.");
 	}
 	
 

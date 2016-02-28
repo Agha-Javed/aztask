@@ -103,5 +103,36 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		session.close();
 		return true;
 	}
+	
+	
+	@Override
+	public int findUserByName(String name) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		int count=session.selectOne("User.selectUserByName",name);
+		logger.info("UserDaoImpl_MyBatis - > total found users by name are : "+count);
+		session.commit();
+		session.close();
+		return count;
+	}
+	
+	@Override
+	public int findUserByEmail(String email) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		int count=session.selectOne("User.selectUserByEmail",email);
+		logger.info("UserDaoImpl_MyBatis - > total found users by eamil are : "+count);
+		session.commit();
+		session.close();
+		return count;
+	}
+	
+	@Override
+	public int findUserByPhone(String phoneNumber) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		int count=session.selectOne("User.selectUserByPhone",phoneNumber);
+		logger.info("UserDaoImpl_MyBatis - > total found users by phone are : "+count);
+		session.commit();
+		session.close();
+		return count;
+	}
 
 }

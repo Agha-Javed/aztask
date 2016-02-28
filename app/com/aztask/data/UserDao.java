@@ -18,4 +18,8 @@ public interface UserDao {
 	public boolean login(Login loginCredentials);
 	public User getUserById(int userId);
 	public List<User> findNearByUsers(Task task);
+	
+	public int findUserByName(String name);
+	public int findUserByPhone(String phoneNumber);
+	public int findUserByEmail(String email);
 }
