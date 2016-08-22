@@ -44,10 +44,15 @@
 <!-- 	  		FROM t_task tul ) as t where distance < 1 order by distance  ]]> -->
 	  		
 	  		
-	 <![CDATA[ select * from (SELECT task_id,task_desc,(6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos( radians(cast(tul.latitude as double precision) ) ) * 
-	 		cos( radians(cast(tul.longitude as double precision) ) - radians(cast(${latitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(cast(tul.latitude as double precision)) ))) AS distance
-	  		FROM t_task tul) as t where distance < 3 order by distance ]]>
-	  		
+<!-- 	 <![CDATA[ select * from (SELECT task_id,task_desc,(6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos( radians(cast(tul.latitude as double precision) ) ) *  -->
+<!-- 	 		cos( radians(cast(tul.longitude as double precision) ) - radians(cast(${latitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(cast(tul.latitude as double precision)) ))) AS distance -->
+<!-- 	  		FROM t_task tul) as t where distance < 10 order by distance ]]> -->
+
+	 <!-- This is query is using fucntions from postgres's two plugins i.e. cube and earthdistance -->
+	 <![CDATA[SELECT *, point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)::point AS distance
+			  FROM t_task task
+			  WHERE (point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)) < 3
+			  ORDER by distance ]]>
 	</select>
 
 	<select id="allTasksOfUser" parameterType="int" resultType="com.aztask.vo.Task">
@@ -83,7 +88,7 @@
 		device_id,
 		task_time)
 		VALUES
-		(#{task_desc},#{task_categories},#{user_id},#{latitude},#{longitude},#{device_id},#{task_time});
+		(#{task_desc},#{task_categories},#{user_id},CAST(#{latitude} AS numeric),CAST(#{longitude} AS numeric),#{device_id},CAST(#{task_time} AS timestamp));
 	</insert>
 	
 	<delete id="deleteTask">

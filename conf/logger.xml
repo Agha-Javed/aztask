@@ -11,18 +11,18 @@
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%coloredLevel %logger{15} - %message%n%xException{5}</pattern>
+      <pattern>%date -  %coloredLevel %logger{15} - %message%n%xException{5}</pattern>
     </encoder>
     
   </appender>
   
-<!--   <logger name="play" level="INFO" /> -->
-<!--   <logger name="application" level="INFO" /> -->
+  <logger name="play" level="INFO" />
+  <logger name="application" level="INFO" />
   
   <!-- to print out sql statments, just uncomment these lines  -->
-<!--   <logger name="java.sql" level="DEBUG"> -->
-<!--    <appender-ref ref="STDOUT"/>  -->
-<!--   </logger> -->
+  <logger name="java.sql" level="INFO">
+   <appender-ref ref="STDOUT"/> 
+  </logger>
   
   <!--need to change to debug to print detial informaion -->
   <root level="INFO">

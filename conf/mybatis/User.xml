@@ -7,7 +7,7 @@
 	<insert id="saveUser" parameterType="com.aztask.vo.User" useGeneratedKeys="true"	keyProperty="id" keyColumn="id">
 	INSERT INTO t_user
 	(name,
-	phone,
+	contact,
 	email,
 	skills,
 	device_id)
@@ -79,7 +79,7 @@
   </select>
 
   <select id="selectUserByPhone" parameterType="java.util.Map" resultType="int">
-  	select count(*) from t_user where phone=#{phone};
+  	select count(*) from t_user where contact=#{phone};
   </select>
   
   

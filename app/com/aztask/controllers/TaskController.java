@@ -90,7 +90,7 @@ public class TaskController extends Controller {
 
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result nearbyTasks() throws Exception {
-		logger.info("TaskController.tasksByCateogories.");
+		logger.info("TaskController.nearbyTasks.");
 		JsonNode taskNode = request().body().asJson();
 		if(taskNode.size()>0){
 

@@ -15,8 +15,8 @@
       "id": "latitude",
       "type": "string"
     },
-    "longtitude": {
-      "id": "longtitude",
+    "longitude": {
+      "id": "longitude",
       "type": "string"
     },
     "device_id": {
@@ -28,7 +28,7 @@
     "task_desc",
     "task_categories",
     "latitude",
-    "longtitude",
+    "longitude",
     "device_id"
   ]
 }

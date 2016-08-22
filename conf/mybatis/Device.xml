@@ -8,7 +8,7 @@
 	INSERT INTO t_user_loc
 	(device_id,latitude,longitude)
 	VALUES
-	(#{deviceInfo.deviceId},#{deviceInfo.latitude},#{deviceInfo.longitude});
+	(#{deviceInfo.deviceId},CAST(#{deviceInfo.latitude} AS numeric),CAST(#{deviceInfo.longitude} AS numeric));
 	</insert>
 
  <update id="updateLocation" parameterType="com.aztask.vo.DeviceInfo">
