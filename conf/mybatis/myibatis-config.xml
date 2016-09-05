@@ -11,10 +11,13 @@
      <property name="url" value="jdbc:postgresql://ec2-54-75-233-137.eu-west-1.compute.amazonaws.com:5432/d49281l73v681o"/>
      <property name="username" value="jvtmqpawjsnfhx"/>
      <property name="password" value="WeNDJkB-HtEu6fHTJ84xtG2w4g"/>
+     
 <!--      <property name="url" value="jdbc:postgresql://localhost:1234/aztask"/> -->
 <!--      <property name="username" value="postgres"/> -->
 <!--      <property name="password" value="root"/> -->
-    </dataSource>
+
+     
+     </dataSource>
   </environment>  
   </environments>
   
