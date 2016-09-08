@@ -33,7 +33,7 @@ public class UserService {
 	}
 
 	
-	public Reply isUserRegistered(String deviceId){
+	public String isUserRegistered(String deviceId){
 		return new UserBO().isUserRegistered(deviceId);
 	}
 	

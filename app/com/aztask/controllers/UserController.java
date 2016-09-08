@@ -115,8 +115,10 @@ public class UserController extends Controller{
 		logger.info("Checking if device "+deviceId+" exists.");
 
 		if (deviceId!=null && deviceId.length()>0) {
-			//String deviceId = requestNode.get("deviceId").textValue();
-			return ok(Json.toJson(UserService.getInstance().isUserRegistered(deviceId)));
+//			return ok(Json.toJson(UserService.getInstance().isUserRegistered(deviceId)));
+
+			return ok(UserService.getInstance().isUserRegistered(deviceId));
+
 		}
 		return ok(Json.toJson(new Reply("400", "Device is not registered.")));
 	}

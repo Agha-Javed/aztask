@@ -2,10 +2,7 @@ package com.aztask.business;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import play.Logger.ALogger;
-
-import com.aztask.controllers.TaskController;
 import com.aztask.data.UserDao;
 import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
 import com.aztask.vo.Login;
@@ -64,9 +61,12 @@ public class UserBO {
 		return (userDao.login(loginCredentials)) ? new Reply("200","Login Successful.") :new Reply("401","Login Failed.");
 	}
 	
-	public Reply isUserRegistered(String userDeviceId){
+	public String isUserRegistered(String userDeviceId){
 		UserDao userDao=new UserDaoImpl_MyBatis();
-		return (userDao.isUserRegistered(userDeviceId)) ? new Reply("200","true") :new Reply("401","false");
+//		return (userDao.isUserRegistered(userDeviceId)) ? new Reply("200","true") :new Reply("401","false");
+		int userId=userDao.isUserRegistered(userDeviceId);
+		return (userId>0) ? "{\"code\":\"200\",\"user_id\":\""+userId+"\"}":"{\"code\":\"400\",\"user_id\":\"0\"}";
+
 	}
 	
 

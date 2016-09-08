@@ -43,7 +43,6 @@ public class UserDaoImpl_MyBatis implements UserDao{
 
 		List<User> relatedUsers=session.selectList("User.selectNearbyUsers",params);
 		return relatedUsers;
-		//return session.getMapper(NearbyUserWrapper.class).nearByUsers(deviceIds, skills);
 	}
 	
 	@Override
@@ -74,12 +73,12 @@ public class UserDaoImpl_MyBatis implements UserDao{
 	
 	
 	@Override
-	public boolean isUserRegistered(String userDeviceId){
+	public int isUserRegistered(String userDeviceId){
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		logger.info("UserDaoImpl_MyBatis - > isUserRegistered::");
 		User userVO=session.selectOne("User.isUserRegistered", userDeviceId);
 		logger.info("UserDaoImpl_MyBatis - > Found User ::"+userVO);
-		return (userVO!=null) ? true : false;
+		return (userVO!=null) ? userVO.getId() : 0;
 	}
 	
 	@Override

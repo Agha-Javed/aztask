@@ -29,9 +29,5 @@ public class Reply {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	public boolean isSuccess(){
-		return (this.code!=null && this.code.equals("200")) ? true : false;
-	}
 
 }

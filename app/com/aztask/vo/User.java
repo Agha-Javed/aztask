@@ -10,9 +10,7 @@ public class User implements Serializable{
 
 	private static final long serialVersionUID = 8024117153604192506L;
 
-	@JsonIgnoreProperties
 	private int id;
-	
 	private String name;
 	private String contact;
 	private String email;
