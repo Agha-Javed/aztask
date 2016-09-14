@@ -3,8 +3,13 @@ package com.aztask.business;
 import java.sql.SQLException;
 import java.util.List;
 import play.Logger.ALogger;
+import play.libs.Json;
+
+import com.aztask.data.DeviceDao;
 import com.aztask.data.UserDao;
+import com.aztask.data.mybatis.DeviceDaoImpl_MyBatis;
 import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
+import com.aztask.vo.DeviceInfo;
 import com.aztask.vo.Login;
 import com.aztask.vo.Reply;
 import com.aztask.vo.Task;
@@ -64,8 +69,14 @@ public class UserBO {
 	public String isUserRegistered(String userDeviceId){
 		UserDao userDao=new UserDaoImpl_MyBatis();
 //		return (userDao.isUserRegistered(userDeviceId)) ? new Reply("200","true") :new Reply("401","false");
-		int userId=userDao.isUserRegistered(userDeviceId);
-		return (userId>0) ? "{\"code\":\"200\",\"user_id\":\""+userId+"\"}":"{\"code\":\"400\",\"user_id\":\"0\"}";
+		User registeredUser=userDao.isUserRegistered(userDeviceId);
+		if(registeredUser!=null && registeredUser.getId()>0){
+			DeviceDao deviceDao=new DeviceDaoImpl_MyBatis();
+			DeviceInfo deviceInfo=deviceDao.getDeviceInfoById(registeredUser.getDeviceId());
+			registeredUser.setDeviceInfo(deviceInfo);
+		}
+
+		return (registeredUser!=null && registeredUser.getId()>0) ? Json.stringify(Json.toJson(registeredUser)) :"{\"code\":\"400\",\"user_id\":\"0\"}";
 
 	}
 	

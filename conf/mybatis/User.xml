@@ -16,7 +16,7 @@
 	</insert>
 
   <select id="isUserRegistered" resultType="com.aztask.vo.User">
-    select * from t_user where device_id = #{device_id}
+    select u.id,u.name,u.contact,u.email,u.skills,u.device_id as deviceId from t_user u where u.device_id= #{device_id};
   </select>
 
   <select id="getUserById" resultType="com.aztask.vo.User">
@@ -37,14 +37,6 @@
 
 
   </select>
-
-<!--   <select id="getNearbyDevices" resultType="com.aztask.vo.NearByDevice" > -->
-
-<!-- 	<![CDATA[ SELECT device_id, (6371 * acos (cos ( radians(#{latitude}) ) * cos( radians(tul.latitude ) ) *  -->
-<!-- 	 		cos( radians(tul.longitude ) - radians(#{longitude}) )+sin ( radians(#{latitude}) ) * sin( radians(tul.latitude) ))) AS distance -->
-<!-- 	  		FROM t_user_loc tul having distance < 3 order by distance  ]]> -->
-<!--   </select> -->
-
 
   <select id="getRelatedNearbyUsers" resultType="com.aztask.vo.User">
 		select * from t_user 
@@ -81,6 +73,14 @@
   <select id="selectUserByPhone" parameterType="java.util.Map" resultType="int">
   	select count(*) from t_user where contact=#{phone};
   </select>
+  
+<!--     <select id="getNearbyDevices" resultType="com.aztask.vo.DeviceInfo" > -->
+
+<!-- 	<![CDATA[SELECT * FROM ( SELECT device_id as deviceId, (6371 * acos (cos ( radians(cast(${latitude} as double precision)) ) * cos ( radians(cast(tul.latitude as double precision) ) ) *  -->
+<!-- 	 		cos( radians(cast(tul.longitude as double precision) ) - radians(cast(${longitude} as double precision)) )+sin ( radians(cast(${latitude} as double precision)) ) * sin( radians(cast(tul.latitude as double precision)) ))) AS distance -->
+<!-- 	  		FROM t_user_loc tul) as t   where distance < 3 order by distance  ]]> -->
+<!--   </select> -->
+  
   
   
 </mapper>

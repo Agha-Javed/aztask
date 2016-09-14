@@ -73,12 +73,12 @@ public class UserDaoImpl_MyBatis implements UserDao{
 	
 	
 	@Override
-	public int isUserRegistered(String userDeviceId){
+	public User isUserRegistered(String userDeviceId){
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		logger.info("UserDaoImpl_MyBatis - > isUserRegistered::");
 		User userVO=session.selectOne("User.isUserRegistered", userDeviceId);
 		logger.info("UserDaoImpl_MyBatis - > Found User ::"+userVO);
-		return (userVO!=null) ? userVO.getId() : 0;
+		return (userVO!=null) ? userVO : null;
 	}
 	
 	@Override

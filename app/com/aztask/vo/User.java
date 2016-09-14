@@ -2,8 +2,6 @@ package com.aztask.vo;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 
 public class User implements Serializable{
@@ -15,6 +13,7 @@ public class User implements Serializable{
 	private String contact;
 	private String email;
 	private String skills;
+	private String deviceId;
 	
 	private DeviceInfo deviceInfo;
 
@@ -28,6 +27,14 @@ public class User implements Serializable{
 		this.email = email;
 		this.skills = skills;
 		this.deviceInfo=deviceInfo;
+	}
+
+	public User(String name, String contact, String email, String skills,String deviceId) {
+		this.name = name;
+		this.contact = contact;
+		this.email = email;
+		this.skills = skills;
+		this.deviceId=deviceId;
 	}
 
 	public User(int id, String name, String contact, String email,
@@ -85,6 +92,14 @@ public class User implements Serializable{
 
 	public void setDeviceInfo(DeviceInfo deviceInfo) {
 		this.deviceInfo = deviceInfo;
+	}
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 
 	

@@ -30,5 +30,21 @@ public class DeviceDaoImpl_MyBatis implements DeviceDao{
 		}
 		return false;
 	}
+	
+	@Override
+	public DeviceInfo getDeviceInfoById(String deviceId) {
+		try{
+			SqlSession session=MyBatis_SessionFactory.openSession();
+			logger.info("DeviceDaoImpl_MyBatis - > getDeviceInfoById -> User Id: "+deviceId);
+			DeviceInfo deviceInfo=session.selectOne("Device.getDeviceInfoById", deviceId);
+			logger.info("DeviceDaoImpl_MyBatis - > Got Device Info:  "+deviceInfo);
+			session.commit();
+			session.close();
+			return (deviceInfo!=null ) ? deviceInfo : null;
+		}catch(Exception exception){
+			exception.printStackTrace();
+		}
+		return null;
+	}
 
 }

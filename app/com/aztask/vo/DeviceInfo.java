@@ -12,9 +12,9 @@ public class DeviceInfo implements Serializable {
 	
 	public DeviceInfo(){}
 	
-	public DeviceInfo(String device_id, String latitude, String longitude) {
+	public DeviceInfo(String deviceId, String latitude, String longitude) {
 		super();
-		this.deviceId = device_id;
+		this.deviceId = deviceId;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -23,8 +23,8 @@ public class DeviceInfo implements Serializable {
 		return deviceId;
 	}
 
-	public void setDeviceId(String device_id) {
-		this.deviceId = device_id;
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 
 	public String getLatitude() {
@@ -45,7 +45,7 @@ public class DeviceInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Device Info [device_id=" + deviceId + "+ , latitude="+latitude+" ,longitude="+longitude+"]";
+		return "Device Info [device_id=" + deviceId + " , latitude="+latitude+" ,longitude="+longitude+"]";
 	}
 	
 }

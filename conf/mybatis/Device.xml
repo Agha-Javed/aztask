@@ -5,17 +5,23 @@
 <mapper namespace="Device">
 
 	<insert id="insertLocation" parameterType="com.aztask.vo.User">
-	INSERT INTO t_user_loc
-	(device_id,latitude,longitude)
-	VALUES
-	(#{deviceInfo.deviceId},CAST(#{deviceInfo.latitude} AS numeric),CAST(#{deviceInfo.longitude} AS numeric));
+		INSERT INTO t_user_loc
+		(device_id,latitude,longitude)
+		VALUES
+		(#{deviceInfo.deviceId},CAST(#{deviceInfo.latitude} AS numeric),CAST(#{deviceInfo.longitude} AS numeric));
 	</insert>
 
- <update id="updateLocation" parameterType="com.aztask.vo.DeviceInfo">
- 
-  	update t_user_loc set latitude=#{latitude},longitude=#{longitude} where device_id=#{deviceId};	
-  
- </update>
-  
+	<update id="updateLocation" parameterType="com.aztask.vo.DeviceInfo">
+
+		update t_user_loc set latitude=#{latitude},longitude=#{longitude} where
+		device_id=#{deviceId};
+
+	</update>
+
+	<select id="getDeviceInfoById" resultType="com.aztask.vo.DeviceInfo">
+		select ul.device_id as deviceId, ul.latitude,ul.longitude from t_user_loc ul where ul.device_id= #{device_id};
+	</select>
+
+
 </mapper>
 
