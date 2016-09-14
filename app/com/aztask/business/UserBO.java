@@ -76,7 +76,7 @@ public class UserBO {
 			registeredUser.setDeviceInfo(deviceInfo);
 		}
 
-		return (registeredUser!=null && registeredUser.getId()>0) ? Json.stringify(Json.toJson(registeredUser)) :"{\"code\":\"400\",\"user_id\":\"0\"}";
+		return (registeredUser!=null && registeredUser.getId()>0) ? Json.stringify(Json.toJson(registeredUser)) :"{\"code\":\"400\",\"id\":\"0\"}";
 
 	}
 	
