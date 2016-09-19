@@ -15,6 +15,10 @@
       "id": "email",
       "type": "string"
     },
+    "gcm_token":{
+      "id": "gcm_token",
+      "type": "string"
+    },
     "skills": {
       "id": "skills",
       "type": "string"

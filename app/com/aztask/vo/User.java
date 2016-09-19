@@ -14,7 +14,9 @@ public class User implements Serializable{
 	private String email;
 	private String skills;
 	private String deviceId;
+	private String gcm_token;
 	
+
 	private DeviceInfo deviceInfo;
 
 	public User() {
@@ -29,12 +31,13 @@ public class User implements Serializable{
 		this.deviceInfo=deviceInfo;
 	}
 
-	public User(String name, String contact, String email, String skills,String deviceId) {
+	public User(String name, String contact, String email, String skills,String deviceId,String gcm_token) {
 		this.name = name;
 		this.contact = contact;
 		this.email = email;
 		this.skills = skills;
 		this.deviceId=deviceId;
+		this.gcm_token=gcm_token;
 	}
 
 	public User(int id, String name, String contact, String email,
@@ -100,6 +103,14 @@ public class User implements Serializable{
 
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
+	}
+
+	public String getGcm_token() {
+		return gcm_token;
+	}
+
+	public void setGcm_token(String gcm_token) {
+		this.gcm_token = gcm_token;
 	}
 
 	

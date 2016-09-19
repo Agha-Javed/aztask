@@ -10,9 +10,10 @@
 	contact,
 	email,
 	skills,
-	device_id)
+	device_id,
+	gcm_token)
 	VALUES
-	(#{name},#{contact},#{email},#{skills},#{deviceInfo.deviceId});
+	(#{name},#{contact},#{email},#{skills},#{deviceInfo.deviceId},#{gcm_token});
 	</insert>
 
   <select id="isUserRegistered" resultType="com.aztask.vo.User">
