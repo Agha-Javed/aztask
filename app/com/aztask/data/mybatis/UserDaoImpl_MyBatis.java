@@ -82,15 +82,15 @@ public class UserDaoImpl_MyBatis implements UserDao{
 	}
 	
 	@Override
-	public boolean registerUser(User userVO) {
+	public User registerUser(User userVO) {
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		session.insert("User.saveUser", userVO);
-		logger.info("UserDaoImpl_MyBatis - > registerUser:: User saved "+userVO.getId());
+		logger.info("UserDaoImpl_MyBatis - > registerUser:: User saved "+userVO);
 		logger.info("UserDaoImpl_MyBatis - > registerUser:: Saving Location ");
 		session.insert("Device.insertLocation", userVO);
 		session.commit();
 		session.close();
-		return true;
+		return userVO;
 	}
 	
 	@Override

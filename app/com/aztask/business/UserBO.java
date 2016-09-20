@@ -25,16 +25,16 @@ public class UserBO {
 	 * This method will do all business logic validation and will register user.
 	 * @throws SQLException 
 	 */
-	public Reply registerUser(User user){
+	public String registerUser(User user){
 		
 		Reply reply=validateData(user);
 		if(!reply.getCode().equals("200")){
 			logger.info(reply.getMessage());
-			return reply;
+			return "{\"code\":\"400\",\"id\":\"0\"}";
 		}
-		
 		UserDao userDao=new UserDaoImpl_MyBatis();
-		return (userDao.registerUser(user)) ? new Reply("200","User Registerd.") :new Reply("401","Error in Registeration.");
+		User registeredUser=userDao.registerUser(user);
+		return (registeredUser!=null) ?  Json.stringify(Json.toJson(registeredUser)) : "{\"code\":\"400\",\"id\":\"0\"}" ;
 	}
 	
 	public Reply updateUserProfile(User user){

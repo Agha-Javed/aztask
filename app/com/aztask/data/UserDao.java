@@ -12,7 +12,7 @@ import com.aztask.vo.User;
  */
 public interface UserDao {
 	
-	public boolean registerUser(User userVO);
+	public User registerUser(User userVO);
 	public boolean updateUserProfile(User userVO);
 	public User isUserRegistered(String userDeviceId);
 	public boolean login(Login loginCredentials);

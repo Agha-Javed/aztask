@@ -18,9 +18,8 @@ public class UserService {
 	private static UserService userService;
 
 	
-	public Reply registerUser(User user){
+	public String registerUser(User user){
     	return new UserBO().registerUser(user);
-
 	}
 
 	public Reply login(Login loginCredentials){

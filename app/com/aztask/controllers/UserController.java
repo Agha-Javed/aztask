@@ -42,13 +42,13 @@ public class UserController extends Controller{
 				user = mapper.treeToValue(userNode, User.class);
 				logger.info("Registering User." + user);
 				logger.info("Device Info." + user.getDeviceInfo());
-				return ok(Json.toJson(UserService.getInstance().registerUser(user)));
+				return ok(UserService.getInstance().registerUser(user));
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return ok(Json.toJson(new Reply("400", "Invalid Request")));
+		return ok("{\"code\":\"400\",\"id\":\"0\"}");
 	}
 
 	
