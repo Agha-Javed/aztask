@@ -9,6 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.logging.Log;
+
 import com.aztask.business.TaskBO;
 import com.aztask.service.UserService;
 import com.aztask.util.Util;
@@ -60,7 +63,9 @@ public class TaskNotifier extends UntypedActor {
 			DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 
 			AssignedTask content = new AssignedTask();
-			content.addRegId(getRegisteredKeys(nearbyUsers));
+			String registeredKeys=getRegisteredKeys(nearbyUsers);
+			log.info("Registered Keys:"+registeredKeys);
+			content.addRegId(registeredKeys);
 			content.createData("Task", "New task has been assigned to you.");
 
 			mapper.writeValue(conn.getOutputStream(), content);
