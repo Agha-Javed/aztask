@@ -65,8 +65,8 @@ public class TaskNotifier extends UntypedActor {
 			AssignedTask content = new AssignedTask();
 			String registeredKeys=getRegisteredKeys(nearbyUsers);
 			log.info("Registered Keys:"+registeredKeys);
-//			content.addRegId(registeredKeys);
-			content.addRegId("cEO1UPyeSvQ:APA91bGPpWZVhUvycNQwSl0mcXMe1rGXQ2IcwBIJkrGzSt_uFDsszkpjj-6C4qv1VI2571ZBo4TFrFMKSsh2K9z9xcDvgPCEKMII2iWz00cCzrnsAeHtxZ9RQ_o4u0SVmwJXp3JVtlok");
+			content.addRegId(registeredKeys);
+			//content.addRegId("cEO1UPyeSvQ:APA91bGPpWZVhUvycNQwSl0mcXMe1rGXQ2IcwBIJkrGzSt_uFDsszkpjj-6C4qv1VI2571ZBo4TFrFMKSsh2K9z9xcDvgPCEKMII2iWz00cCzrnsAeHtxZ9RQ_o4u0SVmwJXp3JVtlok");
 			
 			
 			content.createData("Task", "New task has been assigned to you.");
@@ -106,7 +106,7 @@ public class TaskNotifier extends UntypedActor {
 				registeredKeys.append(",");
 			}
 			String keys=registeredKeys.toString();
-			return keys.substring(0, keys.length()-1);
+			return keys.substring(0, keys.length()-1).trim();
 		}
 		return "";
 	}
