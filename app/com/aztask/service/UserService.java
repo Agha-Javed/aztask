@@ -36,6 +36,9 @@ public class UserService {
 		return new UserBO().isUserRegistered(deviceId);
 	}
 	
+	public Reply registerGCMToken(int userId,String gcmToken){
+		return new UserBO().registerGCMToken(userId,gcmToken);
+	}
 	
 	public List<User> nearByUsers(Task taskVO){
 		return new UserBO().nearByUsers(taskVO);

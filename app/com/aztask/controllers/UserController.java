@@ -72,6 +72,7 @@ public class UserController extends Controller{
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
+			
 		}
 
 		return ok(Json.toJson(new Reply("400", "Invalid Request")));
@@ -121,6 +122,18 @@ public class UserController extends Controller{
 
 		}
 		return ok(Json.toJson(new Reply("400", "Device is not registered.")));
+	}
+	
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result registerGCMToken(int userId) throws Exception {
+		logger.info("Registring gcm token for "+userId+" user.");
+		if (userId>0) {
+			JsonNode requestNode = request().body().asJson();
+			String gcmToken=requestNode.get("token").asText();
+			logger.info("GCM Token "+gcmToken);
+			return ok(Json.toJson(UserService.getInstance().registerGCMToken(userId,gcmToken)));
+		}
+		return ok(Json.toJson(new Reply("400", "Invalid User.")));
 	}
 	
 

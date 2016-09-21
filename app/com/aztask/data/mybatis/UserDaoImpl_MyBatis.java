@@ -11,6 +11,7 @@ import play.Logger.ALogger;
 import com.aztask.data.UserDao;
 import com.aztask.util.Util;
 import com.aztask.vo.Login;
+import com.aztask.vo.Reply;
 import com.aztask.vo.DeviceInfo;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
@@ -132,6 +133,21 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		session.commit();
 		session.close();
 		return count;
+	}
+
+
+	public boolean registerGCMToken(int userId, String gcmToken) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+
+		Map<String, Object> params=new HashMap<String, Object>();
+		params.put("userId",userId);
+		params.put("token", gcmToken);
+
+		session.update("User.registerGCMToken",params);
+		logger.info("UserDaoImpl_MyBatis - > registerGCMToken:: GCM Token Registered.");
+		session.commit();
+		session.close();
+		return true;
 	}
 
 }

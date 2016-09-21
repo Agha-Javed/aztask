@@ -122,6 +122,25 @@ public class UserBO {
 		
 		return new Reply("200","Data is valid.");
 	}
+
+	public Reply registerGCMToken(int userId, String gcmToken) {
+		logger.info("UserBO - > registerGCMToken ");
+
+		if(userId>0 && gcmToken!=null && gcmToken.length()>0){
+
+			UserDao userDao=new UserDaoImpl_MyBatis();
+			User user=userDao.getUserById(userId);
+			if(user==null){
+				return new Reply("400","User doesn't exists.");
+			}
+			
+			logger.info("UserBO - > registring token");
+			
+			return (userDao.registerGCMToken(userId,gcmToken)) ? new Reply("200","Token Registered.") : new Reply("400","Token Registration Error.");
+			
+		}
+		return new Reply("400","Token Registration Error.");
+	}
 	
 
 }

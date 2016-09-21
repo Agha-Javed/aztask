@@ -9,7 +9,8 @@ GET     /                           	 com.aztask.controllers.Application.index()
 # UserController is going to handle all user related activities
 POST	/user/register					 com.aztask.controllers.UserController.registerUser()
 POST	/user/update					 com.aztask.controllers.UserController.updateUserProfile()
-GET	/user/is_registered/:deviceId		 com.aztask.controllers.UserController.isUserRegistered(deviceId: String)
+GET	    /user/is_registered/:deviceId	 com.aztask.controllers.UserController.isUserRegistered(deviceId: String)
+POST	/user/:userId/registerGCMToken		 com.aztask.controllers.UserController.registerGCMToken(userId: Int)
 
 
 # TaskController is going to handle all user related activities

@@ -74,6 +74,12 @@
   <select id="selectUserByPhone" parameterType="java.util.Map" resultType="int">
   	select count(*) from t_user where contact=#{phone};
   </select>
+
+   <update id="registerGCMToken" parameterType="java.util.Map">
+ 
+ 	update t_user set gcm_token=#{token} where id=#{userId}	
+ 
+ </update>
   
 <!--     <select id="getNearbyDevices" resultType="com.aztask.vo.DeviceInfo" > -->
 
