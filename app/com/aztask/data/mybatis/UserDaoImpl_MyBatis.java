@@ -3,15 +3,11 @@ package com.aztask.data.mybatis;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
-
 import play.Logger.ALogger;
-
 import com.aztask.data.UserDao;
 import com.aztask.util.Util;
 import com.aztask.vo.Login;
-import com.aztask.vo.Reply;
 import com.aztask.vo.DeviceInfo;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
@@ -31,6 +27,8 @@ public class UserDaoImpl_MyBatis implements UserDao{
 		List<DeviceInfo> nearByDevices=session.selectList("User.getNearbyDevices", task);//''selectList("Task.getTaskById", userId);
 		logger.info("UserDaoImpl_MyBatis - > findNearByUsers:: number of nearby devices "+nearByDevices.size());
 		String deviceIds=Util.getWhereCluase(nearByDevices);
+		
+		// this check is to remove the device id which created the task. 
 		if(deviceIds!=null && deviceIds.length()>0 && deviceIds.indexOf(task.getDevice_id())>0){
 			deviceIds=deviceIds.replace(task.getDevice_id(), "");
 		}
