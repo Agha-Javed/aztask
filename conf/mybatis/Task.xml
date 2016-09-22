@@ -109,7 +109,7 @@
 
 
 	<select id="getAssignedTask" resultType="com.aztask.vo.AssignedTask">
-		select * from t_assigned_tasks where task_id=${task_id} and task_assignee_id=${task_assignee_id};
+		select task.id,task.task_assignor_id as assignorId,task.task_id as taskId,task.task_assignee_id as assigneeId,task.task_status as taskStatus from t_assigned_tasks task where task.task_id=${task_id} and task.task_assignee_id=${task_assignee_id};
 	</select>
 
  	<update id="updateAssignedTask">

@@ -1,5 +1,6 @@
 package com.aztask.business;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,10 @@ import java.util.List;
 import play.Logger.ALogger;
 
 import com.aztask.data.TaskDao;
+import com.aztask.data.UserDao;
 import com.aztask.data.mybatis.TaskDaoImpl_MyBatis;
+import com.aztask.data.mybatis.UserDaoImpl_MyBatis;
+import com.aztask.util.Util;
 import com.aztask.vo.AssignedTask;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
@@ -80,12 +84,23 @@ public class TaskBO {
 		Logger.info("Task.taskAcceptRequest by user "+acceptedByUserId);
 		TaskDao taskDao=new TaskDaoImpl_MyBatis();
 		AssignedTask assignedTaskVO=taskDao.getAssignedTaskVO(acceptedTaskId, acceptedByUserId);
-		Logger.info("Task.taskAcceptRequest by user "+assignedTaskVO);
-		
+
 		boolean taskAccepted=false;
 		if(assignedTaskVO!=null){
 			assignedTaskVO.setTaskStatus(1);
 			taskAccepted=taskDao.acceptTask(assignedTaskVO);
+			Logger.info("Sending notification to task owner.");
+			
+			UserDao userDao=new UserDaoImpl_MyBatis();
+			User taskAssignorUser=userDao.getUserById(assignedTaskVO.getAssignorId());
+			User taskAssigneeUser=userDao.getUserById(assignedTaskVO.getAssigneeId());
+			if(taskAssignorUser!=null){
+				String message="Your task has been accepted by "+taskAssigneeUser.getName();
+				List<User> userList=new ArrayList<User>();
+				userList.add(taskAssignorUser);
+				Util.notifyUsers(userList, message);
+			}
+
 		}
 		
 		return taskAccepted;
