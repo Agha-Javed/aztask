@@ -76,7 +76,7 @@ public class TaskBO {
 			if(taskIds.contains(task.getTask_id())){
 				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
 			}else{
-				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
+				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "false"));
 			}
 		}
 		return Json.stringify(tasks);//taskDao.nearByTasks(latitude,longitude);
