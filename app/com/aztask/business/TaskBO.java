@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import play.Logger.ALogger;
+import play.libs.Json;
 
 import com.aztask.data.TaskDao;
 import com.aztask.data.UserDao;
@@ -15,6 +16,10 @@ import com.aztask.util.Util;
 import com.aztask.vo.AssignedTask;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class TaskBO {
 
@@ -52,10 +57,29 @@ public class TaskBO {
 
 	}
 
-	public List<Task> nearByTasks(String latitude, String longitude) {
+	public String nearByTasks(JsonNode nearByTasksRequestNode) {
 		Logger.info("TaskBO.nearByTasks.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
-		return taskDao.nearByTasks(latitude,longitude);
+		
+		int userId=nearByTasksRequestNode.get("userId").asInt();
+		String latitude=nearByTasksRequestNode.get("latitude").asText();
+		String longitude=nearByTasksRequestNode.get("longitude").asText();
+
+		Logger.info("Latitude."+latitude);
+		Logger.info("longitude."+longitude);
+
+		List<Integer> taskIds=taskDao.getTasksByAssignee(userId);
+		List<Task> nearByTasks=taskDao.nearByTasks(latitude,longitude);
+		
+		ArrayNode tasks=new ArrayNode(JsonNodeFactory.instance);
+		for (Task task : nearByTasks) {
+			if(taskIds.contains(task.getTask_id())){
+				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
+			}else{
+				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
+			}
+		}
+		return Json.stringify(tasks);//taskDao.nearByTasks(latitude,longitude);
 	}
 
 	public Task getTaskById(int taskId) {

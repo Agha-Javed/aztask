@@ -187,6 +187,21 @@ public class TaskDaoImpl_MyBatis implements TaskDao{
 	}
 	
 	@Override
+	public List<Integer> getTasksByAssignee(int assigneeId) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("TaskDaoImpl_MyBatis - > getTasksByAssignee:: assignee id "+assigneeId);
+
+		Map<String, Integer> params=new HashMap<String, Integer>();
+		params.put("task_assignee_id", assigneeId);
+
+		List<Integer> tasksList=session.selectList("Task.getTasksByAssignee", params);
+		logger.info("TaskDaoImpl_MyBatis - > assignedTaskVO:: "+tasksList);
+		
+		session.close();
+		return tasksList;
+	}
+	
+	@Override
 	public boolean acceptTask(AssignedTask assignedTaskVO) {
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		logger.info("TaskDaoImpl_MyBatis - > acceptedTasks:: user id ");

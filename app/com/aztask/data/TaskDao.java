@@ -19,6 +19,7 @@ public interface TaskDao {
 	public Task getTaskById(int taskId);
 	public void assignTask(Task taskVO, List<User>users);
 	public AssignedTask getAssignedTaskVO(int taskId,int assigneeId);
+	public List<Integer> getTasksByAssignee(int assigneeId);
 	public boolean acceptTask(AssignedTask assignedTaskVO);
 
 }

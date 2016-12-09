@@ -91,21 +91,15 @@ public class TaskController extends Controller {
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result nearbyTasks() throws Exception {
 		logger.info("TaskController.nearbyTasks.");
-		JsonNode taskNode = request().body().asJson();
-		if(taskNode.size()>0){
+		JsonNode nearByTasksRequestNode = request().body().asJson();
+		if(nearByTasksRequestNode.size()>0){
 
-			if(!JSONValidationUtil.validate(taskNode.toString(), Constants.JSON_NEARBY_TASKS_SCHEMA)){
+			if(!JSONValidationUtil.validate(nearByTasksRequestNode.toString(), Constants.JSON_NEARBY_TASKS_SCHEMA)){
 				logger.info("Invalid JSON Data.");
 				return ok(Json.toJson(new Reply("401", "Invalid Request Data.")));
 			}
 			
-			String latitude=taskNode.get("latitude").asText();
-			String longitude=taskNode.get("longitude").asText();
-
-			logger.info("Latitude."+latitude);
-			logger.info("longitude."+longitude);
-
-			return ok(Json.toJson(TaskService.getInstance().nearByTasks(latitude,longitude)));
+			return ok(TaskService.getInstance().nearByTasks(nearByTasksRequestNode));
 		}
 		return ok(Json.toJson(new Reply("200", "You task is being processed.")));
 	}
