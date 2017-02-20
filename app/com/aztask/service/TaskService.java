@@ -3,15 +3,11 @@ package com.aztask.service;
 import java.util.List;
 import play.Logger.ALogger;
 import play.libs.Akka;
-import play.libs.Json;
 import akka.actor.ActorSelection;
 import com.aztask.business.TaskBO;
 import com.aztask.vo.Reply;
 import com.aztask.vo.Task;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class TaskService {
 
@@ -26,6 +22,7 @@ public class TaskService {
 	 * @return
 	 */
 	public List<Task> newTasks(){
+		task_service_log.info("TaskService: listing new tasks.");
 		return new TaskBO().newTasks();
 	}
 	
