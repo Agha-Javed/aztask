@@ -141,6 +141,19 @@ public class UserBO {
 		}
 		return new Reply("400","Token Registration Error.");
 	}
+
+	public String getUserById(String userId) {
+		UserDao userDao=new UserDaoImpl_MyBatis();
+		User registeredUser=userDao.getUserById(Integer.parseInt(userId));
+		if(registeredUser!=null && registeredUser.getId()>0){
+			DeviceDao deviceDao=new DeviceDaoImpl_MyBatis();
+			DeviceInfo deviceInfo=deviceDao.getDeviceInfoById(registeredUser.getDeviceId());
+			registeredUser.setDeviceInfo(deviceInfo);
+		}
+
+		return (registeredUser!=null && registeredUser.getId()>0) ? Json.stringify(Json.toJson(registeredUser)) :"{\"code\":\"400\",\"id\":\"0\"}";
+
+	}
 	
 
 }

@@ -3,6 +3,7 @@ package com.aztask.data;
 import java.util.List;
 
 import com.aztask.vo.AssignedTask;
+import com.aztask.vo.LikedTask;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
 
@@ -21,5 +22,12 @@ public interface TaskDao {
 	public AssignedTask getAssignedTaskVO(int taskId,int assigneeId);
 	public List<Integer> getTasksByAssignee(int assigneeId);
 	public boolean acceptTask(AssignedTask assignedTaskVO);
+	public boolean likeTask(LikedTask likedTask);
+	public boolean unLikeTask(int userIdWhoUnLikedTaskId, int likedTaskId);
+	public List<Integer> getTasksLikedByUser(int userId);
+	public List<Task> assignedTasksToUser(int userId);
+	public boolean unAssignTask(int userId, int taskId);
+	
+	
 
 }

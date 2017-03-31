@@ -12,6 +12,7 @@ import play.Logger.ALogger;
 import com.aztask.data.TaskDao;
 import com.aztask.util.Util;
 import com.aztask.vo.AssignedTask;
+import com.aztask.vo.LikedTask;
 import com.aztask.vo.Task;
 import com.aztask.vo.User;
 
@@ -49,6 +50,24 @@ public class TaskDaoImpl_MyBatis implements TaskDao{
 		session.close();
 		return (recordDeleted>0) ? true : false;
 	}
+	
+	@Override
+	public boolean unAssignTask(int userId, int taskId) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("TaskDaoImpl_MyBatis - > unAssignTask::");
+
+		Map<String, Integer> params=new HashMap<String, Integer>();
+		params.put("userId", userId);
+		params.put("taskId", taskId);
+
+		int recordDeleted=session.delete("Task.unAssignTask", params);
+		logger.info("Record unassigned "+recordDeleted);
+		
+		session.commit();
+		session.close();
+		return (recordDeleted>0) ? true : false;
+	}
+
 	
 	@Override
 	public Task getTaskById(int taskId) {
@@ -212,6 +231,65 @@ public class TaskDaoImpl_MyBatis implements TaskDao{
 		session.close();
 		return (recordUpdated>0) ? true : false;
 	}
+
+	@Override
+	public boolean likeTask(LikedTask likedTaskVO) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("TaskDaoImpl_MyBatis - > likeTask()");
+
+		int recordUpdated=session.insert("Task.likeTask", likedTaskVO);
+		session.commit();
+		
+		session.close();
+		return (recordUpdated>0) ? true : false;
+	}
+	
+	
+	@Override
+	public boolean unLikeTask(int userIdWhoUnLikedTask, int unLikedTaskId) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("TaskDaoImpl_MyBatis - > likeTask()");
+
+		Map<String, Integer> params=new HashMap<String, Integer>();
+		params.put("taskId", unLikedTaskId);
+		params.put("userWhoUnLikedTask", userIdWhoUnLikedTask);
+
+		int recordUpdated=session.insert("Task.unLikeTask", params);
+		session.commit();
+		
+		session.close();
+		return (recordUpdated>0) ? true : false;
+	}
+	
+	@Override
+	public List<Integer> getTasksLikedByUser(int userId) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("TaskDaoImpl_MyBatis - > getTasksLikedByUser:: user id "+userId);
+
+		Map<String, Integer> params=new HashMap<String, Integer>();
+		params.put("user_id", userId);
+
+		List<Integer> tasksList=session.selectList("Task.getTasksLikedByUser", params);
+		logger.info("TaskDaoImpl_MyBatis - > assignedTaskVO:: "+tasksList);
+		
+		session.close();
+		return tasksList;
+	}
+	
+	
+	@Override
+	public List<Task> assignedTasksToUser(int userId) {
+		SqlSession session=MyBatis_SessionFactory.openSession();
+		logger.info("TaskDaoImpl_MyBatis - > assignedTasksToUser:: user id "+userId);
+		
+		List<Task> tasks=session.selectList("Task.assignedTasksToUser", userId);//''selectList("Task.getTaskById", userId);
+		session.close();
+		logger.info("TaskDaoImpl_MyBatis - > assignedTasksToUser:: total found assgined tasks "+tasks.size());
+		return tasks;
+	}
+
+	
+	
 	
 	
 }

@@ -24,4 +24,5 @@ public interface UserDao {
 	public int findUserByName(String name);
 	public int findUserByPhone(String phoneNumber);
 	public int findUserByEmail(String email);
+	
 }

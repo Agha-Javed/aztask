@@ -20,6 +20,7 @@
     select u.id,u.name,u.contact,u.email,u.skills,u.device_id as deviceId from t_user u where u.device_id= #{device_id};
   </select>
 
+
   <select id="getUserById" resultType="com.aztask.vo.User">
     select * from t_user where id = #{id}
   </select>
@@ -31,7 +32,7 @@
 
 	<![CDATA[SELECT task_loc.device_id as deviceId, point(${longitude}, ${latitude}) <@> point(task_loc.longitude,task_loc.latitude)::point AS distance
 			 FROM t_user_loc task_loc
-			 WHERE (point(${longitude},${latitude}) <@> point(task_loc.longitude,task_loc.latitude)) < 5 --feel free to play this!
+			 WHERE (point(${longitude},${latitude}) <@> point(task_loc.longitude,task_loc.latitude)) < 5
 			 ORDER by distance;]]>
 
 

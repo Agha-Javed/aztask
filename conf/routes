@@ -10,7 +10,8 @@ GET     /                           	 com.aztask.controllers.Application.index()
 POST	/user/register					 com.aztask.controllers.UserController.registerUser()
 POST	/user/update					 com.aztask.controllers.UserController.updateUserProfile()
 GET	    /user/is_registered/:deviceId	 com.aztask.controllers.UserController.isUserRegistered(deviceId: String)
-POST	/user/:userId/registerGCMToken		 com.aztask.controllers.UserController.registerGCMToken(userId: Int)
+POST	/user/:userId/registerGCMToken	 com.aztask.controllers.UserController.registerGCMToken(userId: Int)
+GET	    /user/:userId					 com.aztask.controllers.UserController.getUserById(userId: String)
 
 
 # TaskController is going to handle all user related activities
@@ -19,9 +20,15 @@ GET     /tasks/list/featured             com.aztask.controllers.TaskController.f
 POST    /tasks/list/nearby               com.aztask.controllers.TaskController.nearbyTasks()
 GET     /tasks/task/:id                  com.aztask.controllers.TaskController.taskById(id: Int)
 GET		/user/:id/acceptTask/:taskId	 com.aztask.controllers.TaskController.acceptTask(id: Int, taskId: Int)
+GET		/user/:id/likeTask/:taskId	 	 com.aztask.controllers.TaskController.likeTask(id: Int, taskId: Int)
+GET		/user/:id/unLikeTask/:taskId	 com.aztask.controllers.TaskController.unLikeTask(id: Int, taskId: Int)
+
 GET		/user/:id/tasks					 com.aztask.controllers.TaskController.userTasksById(id: Int)
 
-GET		/user/:userId/task/:taskId		 com.aztask.controllers.TaskController.deleteTask(userId: Int, taskId: Int)
+
+GET		/user/:userId/task/:taskId/delete	 com.aztask.controllers.TaskController.deleteTask(userId: Int, taskId: Int)
+GET		/user/:userId/assigned_tasks	 com.aztask.controllers.TaskController.assignedTasksToUser(userId: Int)
+
 POST	/user/:id/createTask			 com.aztask.controllers.TaskController.createTask(id: Int)
 POST	/user/updateTask				 com.aztask.controllers.TaskController.updateTask()
 
@@ -29,6 +36,8 @@ POST	/device/updateLoc				 com.aztask.controllers.DeviceController.updateDeviceL
 
 GET		/tasks/task						 com.aztask.controllers.TaskController.test()
 
+
+GET	   /user/:userId/task/:taskId/unassign_task		 com.aztask.controllers.TaskController.unAssignTask(userId: Int, taskId: Int)
 
 
 # Map static resources from the /public folder to the /assets URL path

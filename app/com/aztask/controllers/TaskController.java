@@ -23,18 +23,16 @@ public class TaskController extends Controller {
 	public static Result newTasks() throws Exception {
 		logger.info("info Testing Logging.");
 		TaskService taskService = TaskService.getInstance();
-		return ok(Json.toJson(taskService.newTasks()));
+		return ok(taskService.newTasks());
 	}
 
 	
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result createTask(int userId) throws Exception {
-
-		logger.info("TaskController.createTask() start.");
-
 		JsonNode taskNode = request().body().asJson();
 
 		if (taskNode.size() > 0) {
+			logger.info("Task Object..."+taskNode.toString());
 			
 			if(!JSONValidationUtil.validate(taskNode.toString(), Constants.JSON_TASK_SCHEMA)){
 				logger.info("Invalid JSON Data.");
@@ -66,6 +64,13 @@ public class TaskController extends Controller {
 		return ok(Json.toJson(TaskService.getInstance().deleteTask(userId, taskId)));
 	}
 
+	public static Result unAssignTask(int userId,int taskId) {
+		logger.info("User Id." + userId+" and TaskId "+taskId);
+		return ok(Json.toJson(TaskService.getInstance().unAssignTask(userId, taskId)));
+	}
+
+	
+
 	public static Result userTasksById(int userId) {
 		logger.info("Got request to show user tasks -> user_id " + userId);
 		return ok(Json.toJson(TaskService.getInstance().allTasksOfUser(userId)));
@@ -75,6 +80,22 @@ public class TaskController extends Controller {
 		logger.info("Accepting task.");
 		logger.info("User " + userId + " is accepting task:" + taskId);
 		return ok(Json.toJson(TaskService.getInstance().acceptTask(userId, taskId)));
+	}
+
+	public static Result likeTask(int userIdWhoLikedTask, int taskId) throws Exception {
+		logger.info("Accepting task.");
+		logger.info("User " + userIdWhoLikedTask + " is accepting task:" + taskId);
+		return ok(Json.toJson(TaskService.getInstance().likeTask(userIdWhoLikedTask, taskId)));
+	}
+
+	public static Result unLikeTask(int userIdWhoUnLikedTask, int taskId) throws Exception {
+		logger.info("User " + userIdWhoUnLikedTask + " unLikeTasks task:" + taskId);
+		return ok(Json.toJson(TaskService.getInstance().unLikeTask(userIdWhoUnLikedTask, taskId)));
+	}
+	
+	public static Result assignedTasksToUser(int userId){
+		logger.info("assignedTasksToUser():: get assigned tasks to this User " + userId);
+		return ok(TaskService.getInstance().assignedTasksToUser(userId));
 	}
 
 	public static Result taskById(int taskId) throws Exception {

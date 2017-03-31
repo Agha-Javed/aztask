@@ -51,6 +51,10 @@ public class UserService {
 			userService=new UserService();
 		}
 		return userService;
+	}
+
+	public String getUserById(String userId) {
+		return new UserBO().getUserById(userId);
 	}	
 
 }

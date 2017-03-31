@@ -26,7 +26,7 @@
 		<!-- This query won't be returning entire list of tasks from table
 			 in fact, there would be a condition to decide number of new tasks to be returned
 			 like, all the tasks created in last 5 mins.  -->
-		select * from t_task limit 10
+		select * from t_task where task_time::date=current_date;
 	</select>
 
 
@@ -56,24 +56,24 @@
 	</select>
 
 	<select id="allTasksOfUser" parameterType="int" resultType="com.aztask.vo.Task">
-		select * from t_task where user_id=#{id}
+		select * from t_task where user_id=#{id} and is_deleted=false
 	</select>
 
 	<select id="pendingTasksOfUser" parameterType="int" resultType="com.aztask.vo.Task">
-		select * from t_task where user_id=#{id}
+		select * from t_task where user_id=#{id} and is_deleted=false
 	</select>
 
 	<select id="acceptedTasksOfUser" parameterType="int" resultType="com.aztask.vo.Task">
-		select * from t_task where user_id=#{id}
+		select * from t_task where user_id=#{id} and is_deleted=false
 	</select>
 
 
 	<select id="getTaskById" resultType="com.aztask.vo.Task">
-		select * from t_task where task_id = #{id}
+		select * from t_task where task_id = #{id} and is_deleted=false
 	</select>
 
 	<select id="tasksByCategories" resultType="com.aztask.vo.Task">
-		select * from t_task where (${task_categories})
+		select * from t_task where (${task_categories}) and is_deleted=false
 	</select>
 
 
@@ -92,9 +92,13 @@
 	</insert>
 	
 	<delete id="deleteTask">
-		delete from t_task where task_id=${taskId} and user_id=${userId}
+		update t_task set is_deleted=true where task_id=${taskId} and user_id=${userId}
 	</delete>
-	
+
+	<delete id="unAssignTask">
+		update t_assigned_tasks set is_deleted=true where task_id=${taskId} and task_assignee_id=${userId}
+	</delete>
+		
 
 	<insert id="assignTask" parameterType="com.aztask.vo.AssignedTask" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
@@ -109,17 +113,42 @@
 
 
 	<select id="getAssignedTask" resultType="com.aztask.vo.AssignedTask">
-		select task.id,task.task_assignor_id as assignorId,task.task_id as taskId,task.task_assignee_id as assigneeId,task.task_status as taskStatus from t_assigned_tasks task where task.task_id=${task_id} and task.task_assignee_id=${task_assignee_id};
+		select task.id,task.task_assignor_id as assignorId,task.task_id as taskId,task.task_assignee_id as assigneeId,task.task_status as taskStatus from t_assigned_tasks task where  and task.is_deleted=false and task.task_id=${task_id} and task.task_assignee_id=${task_assignee_id};
 	</select>
 
 	<select id="getTasksByAssignee" resultType="com.aztask.vo.AssignedTask">
-		select task.task_id as taskId from t_assigned_tasks task where task.task_assignee_id=${task_assignee_id};
+		select task.task_id as taskId from t_assigned_tasks task where task.task_assignee_id=${task_assignee_id} and task.is_deleted=false;
 	</select>
 	
  	<update id="updateAssignedTask">
  		update t_assigned_tasks	set task_status=#{taskStatus} where id=#{id}
  	</update>
+ 	
+ 	<insert id="likeTask" parameterType="com.aztask.vo.LikedTask" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		INSERT INTO t_liked_tasks
+		(task_id,
+		task_owner_id,
+		task_liked_by,
+		comments)
+		VALUES
+		(#{taskId},#{taskOwnerId},#{userWhoLikedTask},#{comments});
+	</insert>
+
+  	<update id="unLikeTask">
+ 		update t_liked_tasks set status=1 where task_id=${taskId} and task_liked_by=${userWhoUnLikedTask}
+ 	</update>
+ 		
+ 	<select id="getTasksLikedByUser"  resultType="java.lang.Integer">
+		select liked_tasks.task_id as taskId from t_liked_tasks liked_tasks where liked_tasks.task_liked_by=${user_id} and liked_tasks.status=0 ;
+	</select>
 	
+ 	<select id="assignedTasksToUser"  resultType="com.aztask.vo.Task">
+ 	  select t.* from t_task t left outer join t_assigned_tasks at on t.task_id=at.task_id
+	  where at.task_assignee_id=#{userId} and at.is_deleted=false;
+	</select>
+	
+ 	
 </mapper>
 
 

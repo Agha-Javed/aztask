@@ -25,7 +25,9 @@ public class TaskNotifier extends UntypedActor {
 			log.info("Nearby Users:"+nearbyUsers);
 			if(nearbyUsers!=null && nearbyUsers.size()>0){
 				new TaskBO().assignTask(taskVO, nearbyUsers);
-				Util.notifyUsers(nearbyUsers,"Task has been assigned to you.");
+				//Task has been assigned to you.
+				String message="You might like \""+Util.shortenTaskDesc(taskVO.getTask_desc())+"..\" task.";
+				Util.sendAssignedNotifiction(nearbyUsers, taskVO);
 			}
 	}
 
