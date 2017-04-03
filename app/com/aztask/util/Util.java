@@ -53,7 +53,7 @@ public class Util {
 	
 	public static void sendLikeNotifiction(User userWhoLikedTask,User userWhoCreatedTask,Task task){
 		
-		String message= userWhoLikedTask.getName()+" is intrested in your task \""+Util.shortenTaskDesc(task.getTask_desc()+"..\"");
+		String message= userWhoLikedTask.getName()+" is intrested in your work \""+Util.shortenTaskDesc(task.getTask_desc())+"..\" you posted.";
 
 		NotificationData notificationData=new NotificationData();
 		
@@ -77,7 +77,7 @@ public class Util {
 		log.info("Registered Keys:"+registeredKeys);
 		content.addRegId(registeredKeys);
 
-		String message="You might like \""+Util.shortenTaskDesc(task.getTask_desc()+"..\" task.");
+		String message="You might like \""+Util.shortenTaskDesc(task.getTask_desc())+"..\" work.";
 		content.putData("title", "Task");
 		content.putData("action", "assigned");
 		content.putData("message", message);
@@ -175,12 +175,12 @@ public class Util {
 	public static void testAssignedTaskNotification(){
 		
 		User userToBeAssigned=new User();
-		userToBeAssigned.setGcm_token("cYq3vHTolFI:APA91bE-pQYmKlKoTAvOu4xYSuNYfjrwayR8Jd8DrVp016T5KCCuocOsxs8Trq5-serovhjM1sl-LX8N3wt3nkeOXVQYSsaUoa8uuALvOoI_7ys5s_ahoSVyy1snGmtqEI5E-g9ma8ZY");
-		userToBeAssigned.setName("Javed");
+		userToBeAssigned.setGcm_token("eikDcE-sAQs:APA91bFcCLJh8n217hO6ZauPUN9MkJmBhchOpp--Pqe6656u2R4iGNAZakJmIgycwQUtoJeBh0wqClJtDUtdtfHCWlXtFF5Lkzy9SVl8m-k2bI5AFSkNCg1TuOGSNgijsHT2dK5mjRnV");
+		userToBeAssigned.setName("Bilal");
 
 		Task assignedTask=new Task();
-		assignedTask.setTask_id(54);
-		assignedTask.setTask_desc("I need photographer.");
+		assignedTask.setTask_id(8);
+		assignedTask.setTask_desc("need someone to get me food.");
 		//user.setGcm_token("fuljMwMLaQw:APA91bG_uWuw6wo2wvuy41SzWwR5ea2Kz2DD-uDG2wIzofSA7O7yB_5C9p_8jYq8VSr2o-_kEwGlLfc8sgvAQVriN20MTo_wymKwDBFis7xAcQl694-xUCbGp32zvAiwulUioZnKy6u1");
 
 		
@@ -198,17 +198,17 @@ public class Util {
 	public static void testLikeNotification(){
 
 		User userWhoCreateTask=new User();
-		userWhoCreateTask.setGcm_token("dvU6jJBQpFQ:APA91bFvwRAQnffiuCWDUzRKE-LgW8dtekAZBy94I0qVc_p94ZiT-FvMHoJUAAcoEcoB6I3QkiYUp1a28s2NcbLWe6-XrTGOqgHVS7T1BAUx93N6RgNvsoYEWQ86mU57KegN8dwKZMS_");
-		userWhoCreateTask.setName("Javed");
+		userWhoCreateTask.setGcm_token("eqtkc1NsLU4:APA91bGhyqytARumlNNdj5TRHriDku4FVtvUKtsz4Elyz7lwpiuYUQv1tNCo-5GDZlyOneqUQf9EhPByLdYgNwAG3wIb7RhvpL2Z6Jla9emwOxH6iUTcTjpoj-e7zDgFXIm2eWquz4E9");
+		userWhoCreateTask.setName("Bilal");
 
 		
 		User userWhoLikedTask=new User();
-		userWhoLikedTask.setName("Zuhaib");
-		userWhoLikedTask.setId(8);
+		userWhoLikedTask.setName("Javed");
+		userWhoLikedTask.setId(1);
 
 		
 		Task likedTask=new Task();
-		likedTask.setTask_id(54);
+		likedTask.setTask_id(1);
 		likedTask.setTask_desc("I need photographer.");
 		//user.setGcm_token("fuljMwMLaQw:APA91bG_uWuw6wo2wvuy41SzWwR5ea2Kz2DD-uDG2wIzofSA7O7yB_5C9p_8jYq8VSr2o-_kEwGlLfc8sgvAQVriN20MTo_wymKwDBFis7xAcQl694-xUCbGp32zvAiwulUioZnKy6u1");
 
@@ -227,8 +227,13 @@ public class Util {
 		sendLikeNotifiction(userWhoLikedTask,userWhoCreateTask,likedTask);
 
 		
+		
+		//public static void sendAssignedNotifiction(List<User> usersList,Task task){
+		
+		
 		//System.out.println(keys);
 		
+	   
 
 		
 	}
