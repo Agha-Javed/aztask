@@ -22,6 +22,14 @@
     "device_id": {
       "id": "device_id",
       "type": "string"
+    },
+    "task_location": {
+      "id": "task_location",
+      "type": "string"
+    },
+    "task_min_max_budget": {
+      "id": "task_min_max_budget",
+      "type": "string"
     }
   },
   "required": [
@@ -29,6 +37,7 @@
     "task_categories",
     "latitude",
     "longitude",
-    "device_id"
+    "device_id",
+    "task_min_max_budget"
   ]
 }

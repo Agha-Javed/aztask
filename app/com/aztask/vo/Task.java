@@ -14,6 +14,9 @@ public class Task implements Serializable {
 	private String device_id;
 	private String task_time;
 	private String task_categories;
+	private String task_location;
+	private String task_min_max_budget;
+
 
 	public Task() {
 
@@ -27,7 +30,7 @@ public class Task implements Serializable {
 	}
 
 	
-	public Task(String task_desc, String task_categories, int user_id,String latitude, String longitude, String deviceId,String task_time) {
+	public Task(String task_desc, String task_categories, int user_id,String latitude, String longitude, String deviceId,String task_time,String task_location,String task_min_max_budget) {
 		super();
 		this.task_desc = task_desc;
 		this.task_categories = task_categories;
@@ -36,6 +39,9 @@ public class Task implements Serializable {
 		this.longitude = longitude;
 		this.device_id = deviceId;
 		this.task_time=task_time;
+		this.task_location=task_location;
+		this.task_min_max_budget=task_min_max_budget;
+		
 	}
 
 	public int getTask_id() {
@@ -107,10 +113,27 @@ public class Task implements Serializable {
 		this.task_time = task_time;
 	}
 
+	
+	public String getTask_min_max_budget() {
+		return task_min_max_budget;
+	}
+
+	public void setTask_min_max_budget(String task_min_max_budget) {
+		this.task_min_max_budget = task_min_max_budget;
+	}
+	
+	public String getTask_location() {
+		return task_location;
+	}
+
+	public void setTask_location(String task_location) {
+		this.task_location = task_location;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "TaskVO [task_desc=" + task_desc + "]";
 	}
-
 
 }

@@ -86,9 +86,11 @@
 		latitude,
 		longitude,
 		device_id,
-		task_time)
+		task_time,
+		task_location,
+		task_min_max_budget)
 		VALUES
-		(#{task_desc},#{task_categories},#{user_id},CAST(#{latitude} AS numeric),CAST(#{longitude} AS numeric),#{device_id},CAST(#{task_time} AS timestamp));
+		(#{task_desc},#{task_categories},#{user_id},CAST(#{latitude} AS numeric),CAST(#{longitude} AS numeric),#{device_id},CAST(#{task_time} AS timestamp),#{task_location},#{task_min_max_budget});
 	</insert>
 	
 	<delete id="deleteTask">
