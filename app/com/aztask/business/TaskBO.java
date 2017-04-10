@@ -34,6 +34,7 @@ public class TaskBO {
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTimeZone(KLTimeZone);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(KLTimeZone);
 		task.setTask_time(sdf.format(new Date(calendar.getTimeInMillis())));
 		int taskId = taskDao.createTask(task);
 		return taskId;
