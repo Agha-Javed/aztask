@@ -1,8 +1,12 @@
 package com.aztask.business;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
+
 import play.Logger.ALogger;
 import play.libs.Json;
 import com.aztask.data.TaskDao;
@@ -26,8 +30,11 @@ public class TaskBO {
 	public int createTask(Task task) {
 		Logger.info("TaskBO.createTask.");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
+		TimeZone KLTimeZone = TimeZone.getTimeZone("Asia/Singapore");
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTimeZone(KLTimeZone);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		task.setTask_time(sdf.format(new Date(System.currentTimeMillis())));
+		task.setTask_time(sdf.format(new Date(calendar.getTimeInMillis())));
 		int taskId = taskDao.createTask(task);
 		return taskId;
 	}
