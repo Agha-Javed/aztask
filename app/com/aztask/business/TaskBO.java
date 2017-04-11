@@ -117,13 +117,19 @@ public class TaskBO {
 		
 		UserDao userDao=new UserDaoImpl_MyBatis();
 		for (Task task : nearByTasks) {
+			ObjectNode objectNode=(ObjectNode)Json.toJson(task);
+			
 			User taskOwner = userDao.getUserById(task.getUser_id());
-			tasks.add(((ObjectNode)Json.toJson(task)).put("contact", taskOwner.getContact()));
+			objectNode.put("contact", taskOwner.getContact());
+			
 			if(taskIds.contains(task.getTask_id())){
-				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
+				objectNode.put("liked", "true");
+				//tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
 			}else{
-				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "false"));
+				objectNode.put("liked", "false");
+				//tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "false"));
 			}
+			tasks.add(objectNode);
 		}
 		return Json.stringify(tasks);//taskDao.nearByTasks(latitude,longitude);
 	}
