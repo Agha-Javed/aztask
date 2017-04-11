@@ -121,6 +121,7 @@ public class TaskBO {
 			
 			User taskOwner = userDao.getUserById(task.getUser_id());
 			objectNode.put("contact", taskOwner.getContact());
+			objectNode.put("user", taskOwner.getName());
 			
 			if(taskIds.contains(task.getTask_id())){
 				objectNode.put("liked", "true");
