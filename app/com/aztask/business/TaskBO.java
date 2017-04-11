@@ -76,12 +76,23 @@ public class TaskBO {
 			List<Integer> likedTaskIds=taskDao.getTasksLikedByUser(userId);
 			List<Task> assignedTasks=taskDao.assignedTasksToUser(userId);
 			
+			UserDao userDao=new UserDaoImpl_MyBatis();
 			for (Task task : assignedTasks) {
+				ObjectNode objectNode=(ObjectNode)Json.toJson(task);
+				
+				User taskOwner = userDao.getUserById(task.getUser_id());
+				objectNode.put("contact", taskOwner.getContact());
+				objectNode.put("user", taskOwner.getName());
+
 				if(likedTaskIds.contains(task.getTask_id())){
-					tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
+					objectNode.put("liked", "true");
+					//tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
 				}else{
-					tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "false"));
+					objectNode.put("liked", "false");
+//					tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "false"));
 				}
+				
+				tasks.add(objectNode);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
