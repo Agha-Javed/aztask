@@ -114,7 +114,11 @@ public class TaskBO {
 		Logger.info("JAVED::Tasks liked by this user."+taskIds);
 		
 		ArrayNode tasks=new ArrayNode(JsonNodeFactory.instance);
+		
+		UserDao userDao=new UserDaoImpl_MyBatis();
 		for (Task task : nearByTasks) {
+			User taskOwner = userDao.getUserById(task.getUser_id());
+			tasks.add(((ObjectNode)Json.toJson(task)).put("contact", taskOwner.getContact()));
 			if(taskIds.contains(task.getTask_id())){
 				tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
 			}else{
