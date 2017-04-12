@@ -86,10 +86,8 @@ public class TaskBO {
 
 				if(likedTaskIds.contains(task.getTask_id())){
 					objectNode.put("liked", "true");
-					//tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "true"));
 				}else{
 					objectNode.put("liked", "false");
-//					tasks.add(((ObjectNode)Json.toJson(task)).put("liked", "false"));
 				}
 				
 				tasks.add(objectNode);

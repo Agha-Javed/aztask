@@ -7,8 +7,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import play.Logger.ALogger;
 
@@ -154,7 +163,7 @@ public class Util {
 	
 	public static String shortenTaskDesc(String taskDesc){
 		if(taskDesc!=null && taskDesc.length()>0){
-			taskDesc = taskDesc.substring(0, Math.min(taskDesc.length(), 15));
+			taskDesc = taskDesc.substring(0, Math.min(taskDesc.length(), 30));
 			return taskDesc;
 		}
 		
@@ -162,21 +171,123 @@ public class Util {
 	}
 	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 //		String s="I nee";
 //		System.out.println("Before:"+s);
 //		s = s.substring(0, Math.min(s.length(), 10));
 //		System.out.println("After:"+s);
 		
 		//testLikeNotification();
-		testAssignedTaskNotification();
+		//testAssignedTaskNotification();
+		
+		//testTimeZone();
+		testDate();
+	}
+	
+	public static void testDate(){
+		
+//		String date="2017-04-03 09:48:16";
+		String date1="2017-04-10 09:39:12";
+		String date2="2017-04-03 09:48:16";
+		
+		List<String> dates=new ArrayList<>();
+	    final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	    final SimpleDateFormat dateFormatter=new SimpleDateFormat(TIME_FORMAT);
+
+		dates.add("2017-03-31 14:33:56");
+		dates.add("2017-03-31 19:56:26");
+		dates.add("2017-04-01 09:01:07");
+		dates.add("2017-04-08 05:07:19");
+		dates.add("2017-04-10 10:59:10");
+		dates.add("2017-04-10 11:00:00");
+		dates.add("2017-04-10 12:24:20");
+		dates.add("2017-04-10 13:55:23");
+		dates.add("2017-04-08 05:11:38");
+		dates.add("2017-04-08 05:12:29");
+		dates.add("2017-04-10 02:24:45");
+		dates.add("2017-04-03 09:48:16");
+		dates.add("2017-04-03 10:13:12");
+		dates.add("2017-04-07 10:29:17");
+		
+		
+		Collections.sort(dates, new Comparator<String>(){
+
+			@Override
+			public int compare(String o1, String o2) {
+		        try {
+		            Date task1Date = dateFormatter.parse(o1);
+		            Date task2Date = dateFormatter.parse(o2);
+
+		            System.out.println("Date 1:"+task1Date+" and Date 2:"+task2Date+" and compare value:"+task1Date.compareTo(task2Date) );
+
+		            return task1Date.compareTo(task2Date);
+		        } catch (ParseException e) {
+		            e.printStackTrace();
+		        }
+		        return 0;
+			}
+			
+			
+		});
+
+		Collections.reverse(dates);;
+
+		System.out.println("Sorting completed.");
+		for (String string : dates) {
+			System.out.println(string);
+		}
+
+		
+/*        try {
+            Date task1Date = dateFormatter.parse(date1);
+            Date task2Date = dateFormatter.parse(date2);
+
+            if (task1Date == null || task2Date == null)
+                System.out.println("Its Null");
+            
+            System.out.println(task1Date.compareTo(task2Date));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+*/
+
+	}
+	
+	public static void testTimeZone(){
+		
+		TimeZone kHITimeZone = TimeZone.getTimeZone("Asia/Karachi");
+		TimeZone SGTimeZone = TimeZone.getTimeZone("Asia/Singapore");
+		
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTimeZone(kHITimeZone);
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(kHITimeZone);
+
+		System.out.println(sdf.format(new Date(calendar.getTimeInMillis())));
+		
+		calendar.setTimeZone(SGTimeZone);
+		sdf.setTimeZone(SGTimeZone);
+		System.out.println(sdf.format(new Date(calendar.getTimeInMillis())));
+
+/*		Date date=new Date();
+		
+		date.to
+		
+		Calendar karachi=Calendar.getInstance(KLTimeZone);
+		System.out.println("UTC:"+new Date(date.getTime()));
+		System.out.println(sdf.format(new Date(karachi.getTimeInMillis())));
+*/
 	}
 	
 	public static void testAssignedTaskNotification(){
 		
 		User userToBeAssigned=new User();
-		userToBeAssigned.setGcm_token("eikDcE-sAQs:APA91bFcCLJh8n217hO6ZauPUN9MkJmBhchOpp--Pqe6656u2R4iGNAZakJmIgycwQUtoJeBh0wqClJtDUtdtfHCWlXtFF5Lkzy9SVl8m-k2bI5AFSkNCg1TuOGSNgijsHT2dK5mjRnV");
-		userToBeAssigned.setName("Bilal");
+//		userToBeAssigned.setGcm_token("eikDcE-sAQs:APA91bFcCLJh8n217hO6ZauPUN9MkJmBhchOpp--Pqe6656u2R4iGNAZakJmIgycwQUtoJeBh0wqClJtDUtdtfHCWlXtFF5Lkzy9SVl8m-k2bI5AFSkNCg1TuOGSNgijsHT2dK5mjRnV");
+		userToBeAssigned.setGcm_token("cPQx_2uVgO4:APA91bGWmJNIb9AySYtkieANiTsqaiANQ3KAgL0b28ZgCvoNRoraM5yo09529l5F6R7noML3WB5brTq_GZj6WXlbcOIMzNQs_dVmyo4pYqfvKLzUICw8DXq-GQX2GYxK0ssjQBYQd7iF");
+
+		
+		userToBeAssigned.setName("Javed");
 
 		Task assignedTask=new Task();
 		assignedTask.setTask_id(8);
@@ -198,7 +309,7 @@ public class Util {
 	public static void testLikeNotification(){
 
 		User userWhoCreateTask=new User();
-		userWhoCreateTask.setGcm_token("eqtkc1NsLU4:APA91bGhyqytARumlNNdj5TRHriDku4FVtvUKtsz4Elyz7lwpiuYUQv1tNCo-5GDZlyOneqUQf9EhPByLdYgNwAG3wIb7RhvpL2Z6Jla9emwOxH6iUTcTjpoj-e7zDgFXIm2eWquz4E9");
+		userWhoCreateTask.setGcm_token("cPQx_2uVgO4:APA91bGWmJNIb9AySYtkieANiTsqaiANQ3KAgL0b28ZgCvoNRoraM5yo09529l5F6R7noML3WB5brTq_GZj6WXlbcOIMzNQs_dVmyo4pYqfvKLzUICw8DXq-GQX2GYxK0ssjQBYQd7iF");
 		userWhoCreateTask.setName("Bilal");
 
 		

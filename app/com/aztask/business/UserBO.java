@@ -30,7 +30,7 @@ public class UserBO {
 		Reply reply=validateData(user);
 		if(!reply.getCode().equals("200")){
 			logger.info(reply.getMessage());
-			return "{\"code\":\"400\",\"id\":\"0\"}";
+			return "{\"code\":\"400\",\"id\":\"0\",\"message\":\""+reply.getMessage()+"\"}";
 		}
 		UserDao userDao=new UserDaoImpl_MyBatis();
 		User registeredUser=userDao.registerUser(user);
@@ -111,10 +111,10 @@ public class UserBO {
 		}
 		
 
-		if(userDaoRef.findUserByEmail(user.getEmail().trim().toLowerCase())>0){
+/*		if(userDaoRef.findUserByEmail(user.getEmail().trim().toLowerCase())>0){
 			return new Reply("400","User with email [ "+user.getEmail()+" ] already exists.");
 		}
-
+*/
 		if(userDaoRef.findUserByPhone(user.getContact().trim())>0){
 			return new Reply("400","User with phone [ "+user.getContact()+" ] already exists.");
 		}
