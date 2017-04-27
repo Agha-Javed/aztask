@@ -104,13 +104,14 @@ public class TaskDaoImpl_MyBatis implements TaskDao{
 	
 	
 	@Override
-	public List<Task> nearByTasks(String latitude,String longitude) {
+	public List<Task> nearByTasks(int userId,String latitude,String longitude) {
 		SqlSession session=MyBatis_SessionFactory.openSession();
 		logger.info("TaskDaoImpl_MyBatis - > nearByTasks:: fetching nearby tasks.");
 		if( (latitude!=null && longitude!=null) && (latitude.length()>0 && latitude.length()>0) ){
 			Map<String, String> params=new HashMap<String, String>();
 			params.put("latitude", latitude);
 			params.put("longitude", longitude);
+			params.put("userId",""+userId);
 			List<Task> nearByTasks=session.selectList("Task.nearByTasks",params);
 			logger.info("Number of nearby tasks returned."+nearByTasks.size());
 			session.close();

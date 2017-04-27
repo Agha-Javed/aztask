@@ -49,10 +49,18 @@
 <!-- 	  		FROM t_task tul) as t where distance < 10 order by distance ]]> -->
 
 	 <!-- This is query is using fucntions from postgres's two plugins i.e. cube and earthdistance -->
-	 <![CDATA[SELECT *, point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)::point AS distance
+	 
+<!-- 	 <![CDATA[SELECT *, point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)::point AS distance
 			  FROM t_task task
 			  WHERE (point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)) < 3
 			  ORDER by distance ]]>
+ -->			  
+
+	 <![CDATA[SELECT u.name as user,u.contact as contact,CASE lt.task_liked_by WHEN ${userId} THEN 'true' ELSE 'false' END as taskLiked,task.*, point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)::point AS distance
+			  FROM t_task task left outer join t_user u on task.user_id=u.id left outer join t_liked_tasks lt  on task.task_id=lt.task_id
+			  WHERE (point(cast(${longitude} as numeric), cast(${latitude} as numeric)) <@> point(task.longitude, task.latitude)) < 3
+			  ORDER by distance ]]>
+			  
 	</select>
 
 	<select id="allTasksOfUser" parameterType="int" resultType="com.aztask.vo.Task">

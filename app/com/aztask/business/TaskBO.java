@@ -117,10 +117,12 @@ public class TaskBO {
 		Logger.info("Latitude."+latitude);
 		Logger.info("longitude."+longitude);
 
-		List<Integer> taskIds=taskDao.getTasksLikedByUser(userId);
-		List<Task> nearByTasks=taskDao.nearByTasks(latitude,longitude);
+		//List<Integer> taskIds=taskDao.getTasksLikedByUser(userId);
+		List<Task> nearByTasks=taskDao.nearByTasks(userId,latitude,longitude);
 		
-		Logger.info("JAVED::Tasks liked by this user."+taskIds);
+		return Json.stringify(Json.toJson(nearByTasks));
+		
+/*		Logger.info("JAVED::Tasks liked by this user."+taskIds);
 		
 		ArrayNode tasks=new ArrayNode(JsonNodeFactory.instance);
 		
@@ -142,7 +144,7 @@ public class TaskBO {
 			tasks.add(objectNode);
 		}
 		return Json.stringify(tasks);//taskDao.nearByTasks(latitude,longitude);
-	}
+*/	}
 
 	public Task getTaskById(int taskId) {
 		Logger.info("TaskBO.getTaskById.");

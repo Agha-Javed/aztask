@@ -12,7 +12,7 @@ public interface TaskDao {
 	public boolean deleteTask(int userId,int taskId);
 	public List<Task> newTasks();
 	public List<Task> featuredTasks();
-	public List<Task> nearByTasks(String latitude, String longitude);
+	public List<Task> nearByTasks(int userId,String latitude, String longitude);
 	public List<Task> getTasksByUser(int userId);
 	public List<Task> pendingTasksOfUser(int userId);
 	public List<Task> acceptedTasksOfUser(int userId);
