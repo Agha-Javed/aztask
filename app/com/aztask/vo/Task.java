@@ -18,9 +18,9 @@ public class Task implements Serializable {
 	private String task_min_max_budget;
 	
 	
-	private String liked;
-	private String user;
-	private String contact;
+	private String liked="";
+	private String user="";
+	private String contact="";
 
 
 	public Task() {
