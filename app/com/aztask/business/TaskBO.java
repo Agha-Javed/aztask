@@ -71,12 +71,12 @@ public class TaskBO {
 	public String assignedTasksToUser(int userId) {
 		Logger.info("TaskBO.assignedTasksToUser().");
 		TaskDao taskDao = new TaskDaoImpl_MyBatis();
-		ArrayNode tasks=new ArrayNode(JsonNodeFactory.instance);
-		try {
-			List<Integer> likedTaskIds=taskDao.getTasksLikedByUser(userId);
+		//ArrayNode tasks=new ArrayNode(JsonNodeFactory.instance);
+			//List<Integer> likedTaskIds=taskDao.getTasksLikedByUser(userId);
 			List<Task> assignedTasks=taskDao.assignedTasksToUser(userId);
+			return Json.stringify(Json.toJson(assignedTasks));
 			
-			UserDao userDao=new UserDaoImpl_MyBatis();
+/*			UserDao userDao=new UserDaoImpl_MyBatis();
 			for (Task task : assignedTasks) {
 				ObjectNode objectNode=(ObjectNode)Json.toJson(task);
 				
@@ -91,11 +91,8 @@ public class TaskBO {
 				}
 				
 				tasks.add(objectNode);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return Json.stringify(tasks);
+			}*/
+//		return Json.stringify(tasks);
 	}
 
 
