@@ -157,7 +157,8 @@
 <!--  	  select t.* from t_task t left outer join t_assigned_tasks at on t.task_id=at.task_id
 	  where at.task_assignee_id=#{userId} and at.is_deleted=false;
  -->	  
-	  select CASE lt.task_liked_by WHEN #{userId} THEN 'true' ELSE 'false' END as liked,t.* from t_task t 
+	  select u.name as user,u.contact as contact,CASE lt.task_liked_by WHEN #{userId} THEN 'true' ELSE 'false' END as liked,t.* from t_task t 
+			left outer join t_user u on t.user_id=u.id
 			left outer join t_assigned_tasks at on t.task_id=at.task_id
 			left outer join t_liked_tasks lt on t.task_id=lt.task_id
 	  		where at.task_assignee_id=#{userId} and at.is_deleted=false;
