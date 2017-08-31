@@ -23,6 +23,8 @@ public class Global extends GlobalSettings {
 		super.onStart(arg0);
 		logger.info("Application Started.");
     	Akka.system().actorOf(Props.create(TaskSupervisor.class),"ParentActor");
+    	
+    	
 	}
 	
 	
