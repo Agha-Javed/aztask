@@ -30,6 +30,8 @@ public class NotificationData implements Serializable {
         data.put("message", message);
         data.put("task", taskId);
         
+        
+        
     }
     
     public void putData(String key, String value){
